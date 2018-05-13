@@ -16,12 +16,12 @@ $navbar-item-active-color: $uv-blue;
 $font-color: #535a60;
 
 body {
-  font-family: 'Questrial', sans-serif;
+  font-family: 'Roboto Mono', monospace;
   color:$font-color;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Questrial', sans-serif;
+  font-family: 'Roboto Mono', monospace;
 }
 
 @import "colors";
