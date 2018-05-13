@@ -1,6 +1,10 @@
 import React from 'react'
+import auth from '../../services/auth'
 
 class Navbar extends React.Component {
+    static logout() {
+        auth.logout()
+    }
     render() {
         return (
             <nav className="navbar navbar-default navbar-fixed-top">
@@ -28,7 +32,10 @@ class Navbar extends React.Component {
 
                         </ul>
                         <ul className="nav navbar-nav navbar-right">
-                            <li><a href="/login">Login</a></li>                                
+                          {
+                              auth.isAuthenticated ? <li><a href="/login">Login</a></li> :
+                                <li><a onClick={Navbar.logout}><i className="fa fa-sign-out-alt"/> Logout</a></li>
+                          }
                         </ul>
                     </div>
                 </div>
