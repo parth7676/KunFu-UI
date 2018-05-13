@@ -1,0 +1,10 @@
+.navbar {
+    border-top: 3px solid $uv-orange;
+    background-color: #fafafb;
+    transition: box-shadow cubic-bezier(.165, .84, .44, 1) .25s;
+    color: $font-color
+}
+
+.navbar-nav>li:hover {
+    background-color: #f2f2f2;
+}

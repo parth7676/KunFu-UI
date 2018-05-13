@@ -1,0 +1,12 @@
+{
+  "plugins": [
+    "lodash",
+    "syntax-dynamic-import",
+    "transform-class-properties",
+    "transform-object-rest-spread",
+    "react-hot-loader/babel"
+  ],
+  "presets": [
+    "env"
+  ]
+}

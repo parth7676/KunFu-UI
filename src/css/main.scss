@@ -1,0 +1,30 @@
+$icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap";
+@import url('https://fonts.googleapis.com/css?family=Questrial');
+@import "~loaders.css/src/animations/ball-scale-multiple.scss";
+
+$uv-orange: #F48024;
+$uv-green: #6D858D;
+$uv-blue: #179FFE;
+$uv-light-blue: #CAE7E8;
+$uv-gray: #F8F6F6;
+$primary: #ffffff;
+$twitter: #4099FF;
+$subtitle-color: $uv-green;
+$navbar-item-color: $uv-blue;
+$navbar-item-active-color: $uv-blue;
+$font-color: #535a60;
+
+body {
+  font-family: 'Questrial', sans-serif;
+  color:$font-color;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Questrial', sans-serif;
+}
+
+@import "colors";
+@import "common";
+@import "footer";
+@import "navbar";
