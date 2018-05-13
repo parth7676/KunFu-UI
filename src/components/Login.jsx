@@ -6,10 +6,10 @@ class Login extends React.Component {
         return (
             <div>
                 <Navbar></Navbar>
-                <div className="container">
+                <div className="container margin-top-50">
                     <div className="row margin-top-50">
                         <div className="col-md-4 col-md-offset-4">
-                            <form className="form-signin" pb-autologin="true" autoComplete="off">
+                            <form className="form-signin" autoComplete="off">
                                 <h2 className="form-signin-heading">Please sign in</h2>
                                 <label htmlFor="inputEmail" className="sr-only">Email address</label>
                                 <input
@@ -18,17 +18,16 @@ class Login extends React.Component {
                                     className="form-control"
                                     placeholder="Email address"
                                     required=""
-                                    autoFocus=""
-                                    pb-role="username" />
+                                    autoFocus="" />
                                 <label htmlFor="inputPassword" className="sr-only">Password</label>
                                 <input type="password" id="inputPassword" className="form-control margin-top-20" placeholder="Password"
-                                    required="" pb-role="password" />
+                                    required=""/>
                                 <div className="checkbox">
                                     <label>
                                         <input type="checkbox" value="remember-me" /> Remember me
                                 </label>
                                 </div>
-                                <button className="btn btn-lg btn-primary btn-block" type="submit" pb-role="submit">Sign in</button>
+                                <button className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
                             </form>
 
                         </div>
