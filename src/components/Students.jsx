@@ -8,9 +8,15 @@ class Students extends React.Component {
     constructor(props) {
         super(props);
         this.actions = this.actions.bind(this)
+        this.onSort = this.onSort.bind(this);
     }
+
+    onSort(col, dir) {
+        console.log('onSort: ' + col + ' ' + dir);
+        this.props.sort(col, dir);
+      }
+
     actions(row) {
-        console.log(row)
         return(
         <div>
             <span style={{fontSize:14}} className="glyphicon glyphicon-edit"></span>
@@ -20,11 +26,11 @@ class Students extends React.Component {
     render() {
         let data = [
             { id: 1, name : 'Parth Patel', rank: 'Black Belt', enrolledDate: '24/07/1994'},
-            { id: 1, name : 'Parth Patel', rank: 'Black Belt', enrolledDate: '24/07/1994'},
+            { id: 2, name : 'Parth Patel', rank: 'Black Belt', enrolledDate: '24/07/1994'},
          ]
 
          let columns = [
-            { name: 'id', display: '#' },
+            { name: 'id', display: '#', sort:true },
             { name: 'name', display: 'Name' },
             { name: 'rank', display: 'Rank' },
             { name: 'enrolledDate', display:'Enrolled Date'},
@@ -37,7 +43,12 @@ class Students extends React.Component {
                 <div className="container margin-top-75">
                     <div className="row">
                         <div className="col-md-12">
-                            <BootstrapTable columns={columns} data={data} headers={[{}]} />
+                            <BootstrapTable 
+                                columns={columns} 
+                                data={data} 
+                                headers={true} 
+                                tableClass='table table-bordered table-hover' 
+                                onSort={this.onSort}/>
                         </div>
                 </div>
                 </div>
