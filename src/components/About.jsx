@@ -11,10 +11,10 @@ class About extends React.Component{
                 <h1 className="mt-4 mb-3">About Us
                 </h1>
                 <div className="row">
-                    <div className="col-md-6">
+                    <div className="img col-md-6 col-lg-6 col-sm-12 col-xs-12">
                         <img src="http://www.hanedanrpg.com/photos/hanedanrpg/27/134301.jpg" alt="..." className="img-rounded img-yy"></img>
                     </div>
-                    <div className="col-md-6 pad-ab">
+                    <div className="col-md-6 col-lg-6 col-sm-12 col-xs-12">
                         <h2>About Kung-Fu</h2>
                         <p>Kung Fu (pronounced wing chun) is an ancient Chinese martial art that was designed in times of war as an effective military technology. We practice it in modern times to defend ourselves in the streets, as well as explore our own economy of motion, and to develop deeper relaxation. The main principles of the systemare centerline, efficiency, and relaxation. To achieve optimal execution of these principles, we practice forms and two person drills.</p>
                         <h4>"The person who says it cannot be done. Should not interrupt the person doing it."</h4>
