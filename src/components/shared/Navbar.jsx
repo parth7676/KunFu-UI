@@ -34,7 +34,7 @@ class Navbar extends React.Component {
                         </ul>
                         <ul className="nav navbar-nav navbar-right">
                             {
-                                auth.isAuthenticated ? <li><a href="/login">Login</a></li> :
+                              auth.authenticated === false ? <li><a href="/login">Login</a></li> :
                                     <li><a onClick={Navbar.logout}><i className="fa fa-sign-out-alt" /> Logout</a></li>
                             }
                         </ul>
