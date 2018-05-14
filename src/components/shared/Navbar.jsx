@@ -21,6 +21,7 @@ class Navbar extends React.Component {
 
                     <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul className="nav navbar-nav">
+                            <li><a href="/about">About</a></li>
                             <li><a href="/faculties">Faculties</a></li>
                             <li><a href="/">Students</a></li>
                             <li><a href="/attendance">Attendance</a></li>
@@ -32,10 +33,10 @@ class Navbar extends React.Component {
 
                         </ul>
                         <ul className="nav navbar-nav navbar-right">
-                          {
-                              auth.isAuthenticated ? <li><a href="/login">Login</a></li> :
-                                <li><a onClick={Navbar.logout}><i className="fa fa-sign-out-alt"/> Logout</a></li>
-                          }
+                            {
+                                auth.isAuthenticated ? <li><a href="/login">Login</a></li> :
+                                    <li><a onClick={Navbar.logout}><i className="fa fa-sign-out-alt" /> Logout</a></li>
+                            }
                         </ul>
                     </div>
                 </div>

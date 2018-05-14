@@ -5,6 +5,7 @@ import auth from './services/auth'
 import Login from 'src/components/Login'
 import Students from 'src/components/Students'
 import StudentDetails from 'src/components/StudentDetails'
+import About from 'src/components/About'
 
 export default (
   <div>
@@ -12,6 +13,7 @@ export default (
       <Route exact path="/login" component={Login} />
       <AuthContainer canAccess={auth.authenticated} exact path='/' component={Students} />
       <Route exact path="/student/:id" component={StudentDetails} />
+      <Route exact path="/about" component={About} />
     </Switch>
   </div>
 )
