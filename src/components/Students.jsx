@@ -11,9 +11,6 @@ class Students extends React.Component {
         super(props);
         this.edit = this.edit.bind(this)
         this.del = this.del.bind(this)
-        this.options = this.options.bind(this)
-        this.modalHeader = this.modalHeader.bind(this)
-        this.modalFooter = this.modalFooter.bind(this)
         this.actionsFormatter = this.actionsFormatter.bind(this)
         this.state = {
           students: []
@@ -63,29 +60,6 @@ class Students extends React.Component {
       </div>
     }
 
-    options () {
-      return {
-        insertModalHeader: this.modalHeader,
-        insertModalFooter: this.modalFooter,
-      }
-    }
-
-    modalHeader(closeModal, save) {
-      return (
-        <InsertModalHeader
-          title="New Student Form"
-        />
-      )
-    }
-
-    modalFooter(closeModal, save) {
-      return (
-        <InsertModalFooter
-          saveBtnText="Enroll Student"
-        />
-      )
-    }
-
     render() {
         return (
             <div>
@@ -98,7 +72,7 @@ class Students extends React.Component {
                     </div>
                     <div className="row">
                         <div className="col-md-12">
-                            <BootstrapTable data={this.state.students} options={this.options()}  striped hover condensed search>
+                            <BootstrapTable data={this.state.students} striped hover condensed search>
                               <TableHeaderColumn isKey={true} dataField="id" dataAlign="center" autoValue={true} dataSort>Student ID</TableHeaderColumn>
                               <TableHeaderColumn dataField="name" dataAlign="center" dataSort>Student Name</TableHeaderColumn>
                               <TableHeaderColumn dataField="birthday" dataAlign="center">Birth Date</TableHeaderColumn>
