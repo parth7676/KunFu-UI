@@ -1,7 +1,7 @@
 import React from 'react'
 import Navbar from "src/components/shared/Navbar"
 import Footer from "src/components/shared/Footer"
-import { BootstrapTable, TableHeaderColumn, InsertModalHeader, InsertModalFooter, InsertButton } from 'react-bootstrap-table';
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import * as students from 'endpoints/students'
 import alertify from 'alertifyjs'
 import PropTypes from 'prop-types'
