@@ -12,7 +12,7 @@ export default (
     <Switch>
       <Route exact path="/login" component={Login} />
       <AuthContainer canAccess={auth.authenticated} exact path='/' component={Students} />
-      <Route exact path="/student/:id" component={StudentDetails} />
+      <AuthContainer canAccess={auth.authenticated} exact path="/students/:id" component={StudentDetails} />
       <Route exact path="/about" component={About} />
     </Switch>
   </div>

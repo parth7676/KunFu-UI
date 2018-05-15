@@ -37,7 +37,7 @@ class Students extends React.Component {
 
     edit(e) {
       const id = e.target.dataset.id
-      this.props.history.push(`/students/${id}`)
+      this.props.history.push(`/student/${id}`)
     }
     
     del(e) {
