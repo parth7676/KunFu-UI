@@ -1,9 +1,82 @@
 import React from 'react'
 import Navbar from 'src/components/shared/Navbar'
 import Footer from 'src/components/shared/Footer'
+import *as students from 'endpoints/students'
+import alertify from 'alertifyjs'
+import PropTypes from 'prop-types'
 
 class StudentDetails extends React.Component {
+
+    constructor(props, context) {
+        super(props, context)
+        this.state = {
+            studentDetails: {},
+            parents: []
+        }
+    }
+
+    componentWillMount() {
+        this.loadStudentDetails(this.props.match.params.id)
+    }
+
+    loadStudentDetails(studentId) {
+        students.getStudentDetails(studentId).then(response => {
+            console.log(response)
+            this.setState({
+                studentDetails: response.data.data,
+                parents: response.data.data.parents
+            })
+        }).catch(error => {
+            if (error) {
+                alertify.error("Error while loadin student details!")
+            }
+        })
+    }
+
     render() {
+        console.log(this.state)
+        let parentsUI = this.state.parents.map(parent => {
+            return (
+                <div className="row" key={parent.id}>
+                    <div className="col-md-4">
+                        <span className="display primary-text">{`#${parent.id}`}</span>
+                        <span className="display secondary-text">{parent.enrolled ? `Student ID` : `Parent ID`}</span>
+                    </div>
+                    <div className="col-md-4">
+                        <span className="display primary-text">{parent.name}</span>
+                        <span className="display secondary-text">Name {parent.enrolled ? <span className="label label-default">Student</span> : ''}</span>
+                    </div>
+                    <div className="col-md-4">
+                        <span className="display primary-text">{parent.mobile_no}</span>
+                        <span className="display secondary-text">Mobile Number</span>
+                    </div>
+                    <div className="col-md-4">
+                        <span className="display primary-text">{parent.birthday}</span>
+                        <span className="display secondary-text">Birth Date</span>
+                    </div>
+                    <div className="col-md-4">
+                        <span className="display primary-text">{parent.created_at}</span>
+                        <span className="display secondary-text">Enrolled Date</span>
+                    </div>
+                    <div className="col-md-4">
+                        <span className="display primary-text">{parent.relation}</span>
+                        <span className="display secondary-text">Relation</span>
+                    </div>
+                    <div className="col-md-4">
+                        <span className="display primary-text">{parent.email}</span>
+                        <span className="display secondary-text">Email</span>
+                    </div>
+                    <div className="col-md-4">
+                        <span className="display primary-text">{parent.address}</span>
+                        <span className="display secondary-text">Address</span>
+                    </div>
+                    {this.state.parents.length > 1 &&
+                        <div className="col-md-12">
+                            <hr />
+                        </div>}
+                </div>
+            )
+        })
         return (
             <div>
                 <Navbar></Navbar>
@@ -17,35 +90,35 @@ class StudentDetails extends React.Component {
                                 <div className="panel-body">
                                     <div className="row">
                                         <div className="col-md-4">
-                                            <span className="display primary-text">#12345</span>
+                                            <span className="display primary-text">{`#${this.state.studentDetails.id}`}</span>
                                             <span className="display secondary-text">Student Id</span>
                                         </div>
                                         <div className="col-md-4">
-                                            <span className="display primary-text">Parth</span>
-                                            <span className="display secondary-text">First Name</span>
+                                            <span className="display primary-text">{this.state.studentDetails.name}</span>
+                                            <span className="display secondary-text">Name</span>
                                         </div>
                                         <div className="col-md-4">
-                                            <span className="display primary-text">Patel</span>
-                                            <span className="display secondary-text">Last Name</span>
+                                            <span className="display primary-text">{this.state.studentDetails.mobile_no}</span>
+                                            <span className="display secondary-text">Mobile Number</span>
                                         </div>
                                     </div>
                                     <div className="row">
                                         <div className="col-md-4">
-                                            <span className="display primary-text">24/07/1994</span>
+                                            <span className="display primary-text">{this.state.studentDetails.birthday}</span>
                                             <span className="display secondary-text">Birth Date</span>
                                         </div>
                                         <div className="col-md-4">
-                                            <span className="display primary-text">24/07/2000</span>
+                                            <span className="display primary-text">{this.state.studentDetails.created_at}</span>
                                             <span className="display secondary-text">Enrolled Date</span>
                                         </div>
                                         <div className="col-md-4">
-                                            <span className="display primary-text">parth7676@gmail.com</span>
+                                            <span className="display primary-text">{this.state.studentDetails.email}</span>
                                             <span className="display secondary-text">Email</span>
                                         </div>
                                     </div>
                                     <div className="row">
                                         <div className="col-md-4">
-                                            <span className="display primary-text">679 Partington Avenue Windsor Ontario Canada</span>
+                                            <span className="display primary-text">{this.state.studentDetails.address}</span>
                                             <span className="display secondary-text">Address</span>
                                         </div>
                                     </div>
@@ -55,11 +128,11 @@ class StudentDetails extends React.Component {
                     </div>
                     <div className="panel panel-default">
                         <div className="panel-heading">
-                            <h3 className="panel-title">Panel title</h3>
+                            <h3 className="panel-title">Family Details</h3>
                         </div>
                         <div className="panel-body">
-                            Panel content
-                    </div>
+                            {parentsUI}
+                        </div>
                     </div>
                 </div>
                 <Footer></Footer>

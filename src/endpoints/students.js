@@ -12,3 +12,6 @@ export function del (id) {
 export function create (student) {
   return axios.post(URL,student)
 }
+export function getStudentDetails(id){
+  return axios.get(`${URL}/${id}`)
+}
