@@ -93,6 +93,7 @@
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^4.0.8",
+    "react-select": "^1.2.1",
     "reactjs-bootstrap-table": "^1.0.12",
     "redux": "^3.7.2",
     "redux-form": "^7.3.0",

@@ -5,15 +5,24 @@ import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import * as students from 'endpoints/students'
 import alertify from 'alertifyjs'
 import PropTypes from 'prop-types'
+import Select from 'react-select'
 
 class Students extends React.Component {
     constructor(props) {
         super(props);
         this.edit = this.edit.bind(this)
         this.del = this.del.bind(this)
+        this.show = this.show.bind(this)
+        this.handleFilter = this.handleFilter.bind(this)
         this.actionsFormatter = this.actionsFormatter.bind(this)
         this.state = {
-          students: []
+          students: [],
+          filter: null,
+          filters: [
+            {value: null, label: 'All'},
+            {value: 'parents', label: 'Parents Only'},
+            {value: 'children', label: 'Children Only'}
+          ]
         }
     }
 
@@ -25,7 +34,8 @@ class Students extends React.Component {
       students.list().then(res => {
         if (res) {
           this.setState({
-            students: res.data.data
+            students: res.data.data,
+            filter: null
           })
         }
       }).catch(err => {
@@ -53,11 +63,37 @@ class Students extends React.Component {
       })
     }
 
+    show(e) {
+      const id = e.target.dataset.id
+      this.props.history.push(`/students/${id}`);
+    }
+
     actionsFormatter(cell, row) {
       return <div>
+        <i className="fa fa-info-circle text-info" style={{marginRight: 10}} onClick={this.show} data-id={row.id}/>
         <i className="fa fa-edit text-primary" style={{marginRight: 10}} onClick={this.edit} data-id={row.id}/>
         <i className="fa fa-trash text-danger" data-id={row.id} onClick={this.del}/>
       </div>
+    }
+
+    handleFilter(e) {
+      let students = {}
+      if (e) {
+        if (e.value === "parents") {
+          students = this.state.students.filter(student => student.children.length !== 0)
+        }
+        if (e.value === "children") {
+          students = this.state.students.filter(student => student.parents.length !== 0)
+        }
+        if (e.value === null) {
+          this.loadStudents()
+        } else {
+          this.setState({
+            filter: e.value,
+            students
+          })
+        }
+      }
     }
 
     render() {
@@ -66,8 +102,37 @@ class Students extends React.Component {
                 <Navbar></Navbar>
                 <div className="container margin-top-75">
                     <div className="row">
-                      <div className="col-md-12">
-                        <h3>Students</h3>
+                      <div className="col-md-3">
+                        <div className="panel panel-default">
+                          <div className="panel-body">
+                            <h5><b>Students Enrolled:</b> {this.state.students.length}</h5>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-md-3">
+                        <div className="panel panel-default">
+                          <div className="panel-body">
+                            <h5><b>Parents Enrolled:</b> {this.state.students.filter(student => student.children.length !== 0 && student.enrolled).length}</h5>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-md-3">
+                        <div className="panel panel-default">
+                          <div className="panel-body">
+                            <h5><b>Total Enrollments: </b>{this.state.students.length}</h5>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-md-3">
+                        <h4>Filter</h4>
+                        <Select
+                          name="form-field-name"
+                          value={this.state.filter}
+                          onChange={this.handleFilter}
+                          options={this.state.filters}
+                        />
                       </div>
                     </div>
                     <div className="row">
