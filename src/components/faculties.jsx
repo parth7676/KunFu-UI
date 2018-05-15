@@ -75,11 +75,7 @@ class Faculties extends React.Component {
                             <BootstrapTable data={this.state.faculties} striped hover condensed search>
                               <TableHeaderColumn isKey={true} dataField="id" dataAlign="center" autoValue={true} dataSort>Faculty ID</TableHeaderColumn>
                               <TableHeaderColumn dataField="name" dataAlign="center" dataSort>Faculty Name</TableHeaderColumn>
-                              {/* <TableHeaderColumn dataField="birthday" dataAlign="center">Birth Date</TableHeaderColumn> */}
-                              {/* <TableHeaderColumn dataField="mobile_no" dataAlign="center">Mobile No</TableHeaderColumn> */}
                               <TableHeaderColumn dataField="email" dataAlign="center">Email</TableHeaderColumn>
-                              {/* <TableHeaderColumn dataField="created_at" dataAlign="center" dataSort>Enrolled On</TableHeaderColumn> */}
-                              {/* <TableHeaderColumn dataField="action" dataAlign="center" dataFormat={this.actionsFormatter}>Actions</TableHeaderColumn> */}
                             </BootstrapTable>
                         </div>
                     </div>
