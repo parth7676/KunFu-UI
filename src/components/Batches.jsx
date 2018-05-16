@@ -54,6 +54,7 @@ class Batches extends React.Component {
             }
         })
     }
+
     render() {
         return (
             <div>
