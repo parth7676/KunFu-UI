@@ -14,6 +14,7 @@ class Ranks extends React.Component {
     this.del = this.del.bind(this)
     this.actionsFormatter = this.actionsFormatter.bind(this)
     this.beltsFormatter = this.beltsFormatter.bind(this)
+    this.levelTypeFormatter = this.levelTypeFormatter.bind(this)
     this.state = {
       ranks: []
     }
@@ -85,7 +86,13 @@ class Ranks extends React.Component {
     }
     return <div><span className="glyphicon glyphicon-bookmark" style={{ color: belt, marginRight: 5 }}></span>{cell}</div>
   }
+
+  levelTypeFormatter(cell, row) {
+    return <div>{row.level.type}</div>
+  }
+
   render() {
+    console.log(this.state)
     return (
       <div>
         <Navbar></Navbar>
@@ -109,6 +116,7 @@ class Ranks extends React.Component {
               <BootstrapTable data={this.state.ranks} striped hover condensed search>
                 <TableHeaderColumn isKey={true} dataField="belt_color" dataAlign="center" autoValue={true}
                   dataFormat={this.beltsFormatter}>Belt Colour</TableHeaderColumn>
+                <TableHeaderColumn dataField="level" dataAlign="center" dataFormat={this.levelTypeFormatter}>Level</TableHeaderColumn>
                 <TableHeaderColumn dataField="created_at" dataAlign="center">Created At</TableHeaderColumn>
                 <TableHeaderColumn dataField="updated_at" dataAlign="center">Updated At</TableHeaderColumn>
               </BootstrapTable>
