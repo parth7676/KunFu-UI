@@ -4,7 +4,6 @@ import Footer from "src/components/shared/Footer"
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import * as faculties from 'endpoints/faculties'
 import alertify from 'alertifyjs'
-import PropTypes from 'prop-types'
 
 class Faculties extends React.Component {
     constructor(props) {
@@ -64,7 +63,7 @@ class Faculties extends React.Component {
         return (
           <div>
             <Navbar></Navbar>
-            <div className="container-fluid margin-top-50">
+            <div className="container margin-top-75 margin-bottom-25">
                 <div className="row">
                     <div className="col-md-12">
                         <h3>Faculties</h3>

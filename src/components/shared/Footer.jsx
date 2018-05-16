@@ -5,7 +5,16 @@ class Footer extends React.Component {
         return (
             <footer className="footer">
                 <div className="container">
-                    <p className="text-muted"><strong>KungFu Yoga</strong></p>
+                    <div className="row">
+                        <div className="col-md-4">
+                            <p className="text-muted"><strong>KungFu Yoga</strong></p>
+                        </div>
+                        <div className="col-md-4"></div>
+                        <div className="col-md-4">
+                            <p>Made with <span className="glyphicon glyphicon-heart" style={{ color: 'red' }}></span> by Hardik, Parth and Siddarth</p>
+                        </div>
+                    </div>
+
                 </div>
             </footer>
         )

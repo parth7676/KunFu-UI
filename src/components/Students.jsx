@@ -100,7 +100,7 @@ class Students extends React.Component {
         return (
             <div>
                 <Navbar></Navbar>
-                <div className="container margin-top-75">
+                <div className="container margin-top-75 margin-bottom-25">
                     <div className="row">
                       <div className="col-md-3">
                         <div className="panel panel-default">
