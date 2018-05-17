@@ -90,6 +90,7 @@ class InsertModal extends React.Component {
                   return (
                     <div className='form-group' key={ field }>
                       <label>{ name } : </label>
+                      <p className="text-danger">{editable.message}</p>
                       {
                         editable.type !== 'select' && editable.type !== 'textarea' &&
                           <input ref={field}
