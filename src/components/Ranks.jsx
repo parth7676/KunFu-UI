@@ -118,6 +118,7 @@ class Ranks extends React.Component {
                 <TableHeaderColumn dataField="level" dataAlign="center" dataFormat={this.levelTypeFormatter}>Level</TableHeaderColumn>
                 <TableHeaderColumn dataField="created_at" dataAlign="center">Created At</TableHeaderColumn>
                 <TableHeaderColumn dataField="updated_at" dataAlign="center">Updated At</TableHeaderColumn>
+                <TableHeaderColumn dataField="action" dataAlign="center" dataFormat={this.actionsFormatter}>Actions</TableHeaderColumn>
               </BootstrapTable>
             </div>
           </div>
