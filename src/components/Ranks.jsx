@@ -1,10 +1,12 @@
 import React from 'react'
 import Navbar from 'src/components/shared/Navbar'
 import Footer from 'src/components/shared/Footer'
-import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
+import { BootstrapTable, InsertButton, TableHeaderColumn } from 'react-bootstrap-table'
 import * as ranks from 'endpoints/ranks'
 import alertify from 'alertifyjs'
 import PropTypes from 'prop-types'
+import InsertModal from 'components/shared/InsertModal'
+import * as levels from 'endpoints/levels'
 
 class Ranks extends React.Component {
 
@@ -12,11 +14,15 @@ class Ranks extends React.Component {
     super(props);
     this.edit = this.edit.bind(this)
     this.del = this.del.bind(this)
+    this.options = this.options.bind(this)
+    this.save = this.save.bind(this)
+    this.createInsertModal = this.createInsertModal.bind(this)
     this.actionsFormatter = this.actionsFormatter.bind(this)
     this.beltsFormatter = this.beltsFormatter.bind(this)
     this.levelTypeFormatter = this.levelTypeFormatter.bind(this)
     this.state = {
-      ranks: []
+      ranks: [],
+      levels: []
     }
   }
 
@@ -30,10 +36,27 @@ class Ranks extends React.Component {
         this.setState({
           ranks: res.data.data
         })
+        this.loadLevels()
       }
     }).catch(err => {
       if (err) {
         alertify.error('Unable to fetch ranks')
+      }
+    })
+  }
+
+  loadLevels() {
+    levels.list().then(response => {
+      let levels = []
+      response.data.data.forEach(level => {
+        levels.push({value: level.id, label: level.type})
+      })
+      this.setState({
+        levels
+      })
+    }).catch(error => {
+      if (error) {
+        alertify.error("Error while loading levels!")
       }
     })
   }
@@ -56,6 +79,18 @@ class Ranks extends React.Component {
     })
   }
 
+  save(data, onSave, onModalClose) {
+    ranks.create(data).then(res => {
+      if(res) {
+        onModalClose()
+        this.loadRanks()
+      }
+    }).catch(err => {
+      if (err) {
+        alertify.error('Unable to create new rank!')
+      }
+    })
+  }
   actionsFormatter(cell, row) {
     return <div>
       <i className="fa fa-edit text-primary" style={{ marginRight: 10 }} onClick={this.edit} data-id={row.id} />
@@ -64,31 +99,55 @@ class Ranks extends React.Component {
   }
 
   beltsFormatter(cell, row) {
-    let belt = `#FFFFFF`;
-    if (cell == "yellow") {
-      belt = '#FFFF00'
-    } else if (cell == "halfgreen") {
-      belt = '#3ADF00'
-    } else if (cell == "green") {
-      belt = '#298A08'
-    } else if (cell == "halfblue") {
-      belt = '#0000FF'
-    } else if (cell == "blue") {
-      belt = '#08088A'
-    } else if (cell == "halfred") {
-      belt = '#FE2E64'
-    } else if (cell == "red") {
-      belt = '#DF013A'
-    } else if (cell == "halfblack") {
-      belt = '#848484'
-    } else if (cell == "black") {
-      belt = '#000000'
+    let belt
+    switch (cell) {
+      case "yellow":
+        belt = '#FFFF00'
+        break
+      case "halfgreen":
+        belt = '#3ADF00'
+        break
+      case "green":
+        belt = '#298A08'
+        break
+      case "halfblue":
+        belt = '#0000FF'
+        break
+      case "blue":
+        belt = '#08088A'
+        break
+      case "halfred":
+        belt = '#FE2E64'
+        break
+      case "red":
+        belt = '#DF013A'
+        break
+      case "halfblack":
+        belt = '#848484'
+        break
+      case "black":
+        belt = '#000000'
+        break
+      default:
+        belt = "#FFFFFF"
     }
-    return <div><span className="glyphicon glyphicon-bookmark" style={{ color: belt, marginRight: 5 }}></span>{cell}</div>
+    return <div><span className="glyphicon glyphicon-bookmark" style={{ color: belt, marginRight: 5 }}/>{cell}</div>
   }
 
   levelTypeFormatter(cell, row) {
     return <div>{row.level.type}</div>
+  }
+
+  createInsertModal(onModalClose, onSave, columns, validateState, ignoreEditable) {
+    const attr = { onModalClose, onSave, columns, validateState, ignoreEditable };
+    return <InsertModal { ...attr } title="New Rank" saveBtnText="Add Rank" handleSave={this.save} bsSize="md" />
+  }
+
+  options () {
+    return {
+      insertBtn: () => <InsertButton btnText="Create Rank" />,
+      insertModal: this.createInsertModal
+    }
   }
 
   render() {
@@ -112,13 +171,13 @@ class Ranks extends React.Component {
           </div>
           <div className="row">
             <div className="col-md-12">
-              <BootstrapTable data={this.state.ranks} striped hover condensed search>
+              <BootstrapTable data={this.state.ranks} options={this.options()} striped hover condensed search insertRow>
                 <TableHeaderColumn isKey={true} dataField="belt_color" dataAlign="center" autoValue={true}
-                  dataFormat={this.beltsFormatter}>Belt Colour</TableHeaderColumn>
-                <TableHeaderColumn dataField="level" dataAlign="center" dataFormat={this.levelTypeFormatter}>Level</TableHeaderColumn>
-                <TableHeaderColumn dataField="created_at" dataAlign="center">Created At</TableHeaderColumn>
-                <TableHeaderColumn dataField="updated_at" dataAlign="center">Updated At</TableHeaderColumn>
-                <TableHeaderColumn dataField="action" dataAlign="center" dataFormat={this.actionsFormatter}>Actions</TableHeaderColumn>
+                  dataFormat={this.beltsFormatter} editable={{type: 'text', required: true}}>Belt Colour</TableHeaderColumn>
+                <TableHeaderColumn dataField="level_id" dataAlign="center" dataFormat={this.levelTypeFormatter} editable={{type: 'select', options: this.state.levels}}>Level</TableHeaderColumn>
+                <TableHeaderColumn dataField="created_at" dataAlign="center" hiddenOnInsert>Created At</TableHeaderColumn>
+                <TableHeaderColumn dataField="updated_at" dataAlign="center" hiddenOnInsert>Updated At</TableHeaderColumn>
+                <TableHeaderColumn dataField="action" dataAlign="center" dataFormat={this.actionsFormatter} hiddenOnInsert>Actions</TableHeaderColumn>
               </BootstrapTable>
             </div>
           </div>
