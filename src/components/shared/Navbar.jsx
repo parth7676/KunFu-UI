@@ -1,10 +1,21 @@
 import React from 'react'
 import auth from '../../services/auth'
+import { withRouter } from 'react-router-dom'
 
 class Navbar extends React.Component {
+    constructor (props) {
+        super(props)
+    }
+
+    componentDidMount() {
+        const item = this.props.match.url
+        this.refs[item].classList.add('active')
+    }
+
     static logout() {
         auth.logout()
     }
+
     render() {
         return (
             <nav className="navbar navbar-default navbar-fixed-top">
@@ -21,16 +32,15 @@ class Navbar extends React.Component {
 
                     <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul className="nav navbar-nav">
-                            <li><a href="/about">About</a></li>
-                            {auth.authenticated && <li><a href="/faculties">Faculties</a></li>}
-                            {auth.authenticated && <li><a href="/">Students</a></li>}
-                            {auth.authenticated && <li><a href="/attendance">Attendance</a></li>}
-                            {auth.authenticated && <li><a href="/batches">Batches</a></li>}
-                            {auth.authenticated && <li><a href="sales">Sales</a></li>}
-                            {auth.authenticated && <li><a href="levels">Levels</a></li>}
-                            {auth.authenticated && <li><a href="ranks">Ranks</a></li>}
-                            {auth.authenticated && <li><a href="progresses">Progresses</a></li>}
-
+                            <li ref={"/about"}><a href="/about">About</a></li>
+                            {auth.authenticated && <li ref={"/faculties"}><a href="/faculties">Faculties</a></li>}
+                            {auth.authenticated && <li ref={"/"}><a href="/">Students</a></li>}
+                            {auth.authenticated && <li ref={"/attendance"}><a href="/attendance">Attendance</a></li>}
+                            {auth.authenticated && <li ref={"/batches"}><a href="/batches">Batches</a></li>}
+                            {auth.authenticated && <li ref={"/sales"}><a href="/sales">Sales</a></li>}
+                            {auth.authenticated && <li ref={"/levels"}><a href="/levels">Levels</a></li>}
+                            {auth.authenticated && <li ref={"/ranks"}><a href="/ranks">Ranks</a></li>}
+                            {auth.authenticated && <li ref={"/progresses"}><a href="/progresses">Progresses</a></li>}
                         </ul>
                         <ul className="nav navbar-nav navbar-right" style={{ cursor: 'pointer' }}>
                             {
@@ -45,4 +55,4 @@ class Navbar extends React.Component {
     }
 }
 
-export default Navbar
+export default withRouter(Navbar)
