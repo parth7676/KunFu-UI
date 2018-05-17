@@ -10,3 +10,7 @@ export function list() {
 export function del (id) {
   return axios.delete(URL+"/"+id)
 }
+
+export function create (data) {
+  return axios.post(URL, data)
+}
