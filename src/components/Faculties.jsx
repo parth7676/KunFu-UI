@@ -86,13 +86,24 @@ class Faculties extends React.Component {
           <i className="fa fa-edit text-primary" style={{marginRight: 10}} onClick={this.edit} data-id={row.id}/>
           <i className="fa fa-trash text-danger" data-id={row.id} onClick={this.del}/>
         </div>
-      }
+    }
 
     render() {
         return (
           <div>
             <Navbar></Navbar>
-            <div className="container margin-top-75 margin-bottom-25">
+            <div className="container margin-top-75">
+              <div className="row">
+                <div className="col-md-3">
+                  <div className="panel panel-default">
+                    <div className="panel-body">
+                      <h5><b>Faculties Enrolled:</b> {this.state.faculties.length}</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="container margin-bottom-25">
                 <div className="row">
                     <div className="col-md-12">
                         <h3>Faculties</h3>
