@@ -1,11 +1,12 @@
 import React from 'react'
 import Navbar from "src/components/shared/Navbar"
 import Footer from "src/components/shared/Footer"
-import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
+import { BootstrapTable, TableHeaderColumn, InsertModalBody, InsertButton } from 'react-bootstrap-table'
 import * as students from 'endpoints/students'
 import alertify from 'alertifyjs'
 import PropTypes from 'prop-types'
 import Select from 'react-select'
+import InsertModal from 'src/components/shared/InsertModal'
 
 class Students extends React.Component {
     constructor(props) {
@@ -14,6 +15,8 @@ class Students extends React.Component {
         this.del = this.del.bind(this)
         this.show = this.show.bind(this)
         this.handleFilter = this.handleFilter.bind(this)
+        this.insertModal = this.insertModal.bind(this)
+        this.save = this.save.bind(this)
         this.actionsFormatter = this.actionsFormatter.bind(this)
         this.state = {
           students: [],
@@ -96,6 +99,31 @@ class Students extends React.Component {
       }
     }
 
+    save(data, onSave, onModalClose) {
+      students.create(data).then(res => {
+        if (res) {
+          onModalClose();
+          this.loadStudents()
+        }
+      }).catch(err => {
+        if (err) {
+          alertify.error('Unable to add student!')
+        }
+      })
+    }
+
+    insertModal (onModalClose, onSave, columns, validateState, ignoreEditable) {
+      const attr = { onModalClose, onSave, columns, validateState, ignoreEditable };
+      return <InsertModal { ...attr } title="New Enrollment" saveBtnText="Enroll Student" handleSave={this.save} bsSize="md" />
+    }
+
+    options() {
+      return {
+        insertModal: this.insertModal,
+        insertBtn: () => <InsertButton btnText="New Enrollment" />
+      }
+    }
+
     render() {
         return (
             <div>
@@ -135,16 +163,17 @@ class Students extends React.Component {
                         />
                       </div>
                     </div>
-                    <div className="row">
+                    <div className="row margin-top-20">
                         <div className="col-md-12">
-                            <BootstrapTable data={this.state.students} striped hover condensed search>
-                              <TableHeaderColumn isKey={true} dataField="id" dataAlign="center" autoValue={true} dataSort>Student ID</TableHeaderColumn>
-                              <TableHeaderColumn dataField="name" dataAlign="center" dataSort>Student Name</TableHeaderColumn>
-                              <TableHeaderColumn dataField="birthday" dataAlign="center">Birth Date</TableHeaderColumn>
-                              <TableHeaderColumn dataField="mobile_no" dataAlign="center">Mobile No</TableHeaderColumn>
-                              <TableHeaderColumn dataField="email" dataAlign="center">Email</TableHeaderColumn>
-                              <TableHeaderColumn dataField="created_at" dataAlign="center" dataSort>Enrolled On</TableHeaderColumn>
-                              <TableHeaderColumn dataField="action" dataAlign="center" dataFormat={this.actionsFormatter}>Actions</TableHeaderColumn>
+                            <BootstrapTable data={this.state.students} options={this.options()} striped hover condensed search insertRow>
+                              <TableHeaderColumn isKey={true} dataField="id" dataAlign="center" autoValue={true} dataSort hiddenOnInsert>Student ID</TableHeaderColumn>
+                              <TableHeaderColumn dataField="name" dataAlign="center" dataSort editable={{ required: true }}>Student Name</TableHeaderColumn>
+                              <TableHeaderColumn dataField="birthday" dataAlign="center" editable={{ type: 'date', required: true }}>Birth Date</TableHeaderColumn>
+                              <TableHeaderColumn dataField="mobile_no" dataAlign="center" editable={{required: true, maxLength: 10, pattern: "\\d{10}" }}>Mobile No</TableHeaderColumn>
+                              <TableHeaderColumn dataField="email" dataAlign="center" editable={{ type: 'email', required: true }}>Email</TableHeaderColumn>
+                              <TableHeaderColumn dataField="address" dataAlign="center" editable={{ type: 'textarea', required: true }} hidden>Address</TableHeaderColumn>
+                              <TableHeaderColumn dataField="created_at" dataAlign="center" hiddenOnInsert dataSort>Enrolled On</TableHeaderColumn>
+                              <TableHeaderColumn dataField="action" dataAlign="center" hiddenOnInsert dataFormat={this.actionsFormatter}>Actions</TableHeaderColumn>
                             </BootstrapTable>
                         </div>
                     </div>

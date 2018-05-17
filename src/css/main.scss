@@ -24,6 +24,13 @@ h1, h2, h3, h4, h5, h6 {
   font-family: 'Roboto Mono', monospace;
 }
 
+.msg-success {
+  border: 1px solid $brand-success;
+}
+.msg-error {
+  border: 1px solid $brand-danger;
+}
+
 @import "colors";
 @import "common";
 @import "footer";
