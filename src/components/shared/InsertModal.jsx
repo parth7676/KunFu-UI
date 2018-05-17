@@ -27,6 +27,9 @@ class InsertModal extends React.Component {
     } else {
       target.classList.remove('msg-success')
       target.classList.add('msg-error')
+      this.setState({
+        showSaveOption: false
+      })
     }
   }
 
@@ -98,6 +101,16 @@ class InsertModal extends React.Component {
                                  className="form-control"
                                  onChange={this.validate}
                           />
+                      }
+                      {
+                        editable.type === 'select' &&
+                        <select ref={field} className="form-control" required={!!editable.required} onChange={this.validate} onBlur={this.validate}>
+                          {
+                            editable.options.map((option, index) =>
+                              typeof option === 'object' && <option key={index} value={option.value}>{option.label}</option>
+                            )
+                          }
+                        </select>
                       }
                       {
                         editable.type === 'textarea' &&
