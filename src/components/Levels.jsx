@@ -57,7 +57,10 @@ class Levels extends React.Component {
     }
 
     rankFormatter(cell, row) {
-        return row.ranks.map(rank => <span className="badge" key={rank.id}>{rank.belt_color}</span>)
+        let ranks = ""
+        cell.length !== 0 && cell.forEach(rank => ranks = ranks+" "+`<span class="badge text-capitalize">${rank.belt_color}</span>`)
+        cell.length === 0 && (ranks = "No ranks associated")
+        return ranks
     }
 
     save(data, onSave, onModalClose) {
@@ -99,7 +102,7 @@ class Levels extends React.Component {
                             <BootstrapTable data={this.state.levels} options={this.options()} striped hover condensed search insertRow>
                                 <TableHeaderColumn isKey={true} dataField="id" dataAlign="center" autoValue={true} hiddenOnInsert>ID</TableHeaderColumn>
                                 <TableHeaderColumn dataField="type" dataAlign="center" editable={{type: 'text', required: true}}>Type</TableHeaderColumn>
-                                <TableHeaderColumn dataField="type" dataAlign="center" dataFormat={this.rankFormatter} hiddenOnInsert>Type</TableHeaderColumn>
+                                <TableHeaderColumn dataField="ranks" dataAlign="center" dataFormat={this.rankFormatter} hiddenOnInsert>Ranks</TableHeaderColumn>
                                 <TableHeaderColumn dataField="created_at" dataAlign="center"  hiddenOnInsert>Created At</TableHeaderColumn>
                                 <TableHeaderColumn dataField="updated_at" dataAlign="center"  hiddenOnInsert>Updated At</TableHeaderColumn>
                                 <TableHeaderColumn dataField="actions" dataAlign="center" dataFormat={this.actionsFormatter}  hiddenOnInsert>Actions</TableHeaderColumn>

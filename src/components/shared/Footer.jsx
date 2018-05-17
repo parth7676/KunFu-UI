@@ -3,7 +3,7 @@ import React from 'react'
 class Footer extends React.Component {
     render() {
         return (
-            <footer className="footer">
+            <footer className="navbar-fixed-bottom footer">
                 <div className="container">
                     <div className="row">
                         <div className="col-md-4">
