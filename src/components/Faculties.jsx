@@ -102,8 +102,7 @@ class Faculties extends React.Component {
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="container margin-bottom-25">
+              <div className="container margin-bottom-25">
                 <div className="row">
                     <div className="col-md-12">
                         <h3>Faculties</h3>
@@ -122,6 +121,7 @@ class Faculties extends React.Component {
                     </div>
                 </div>
             </div>
+            </div>   
             <Footer></Footer>
           </div>
         )

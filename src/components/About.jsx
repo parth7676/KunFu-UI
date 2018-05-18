@@ -16,7 +16,7 @@ class About extends React.Component{
                     </div>
                     <div className="col-md-6 col-lg-6 col-sm-12 col-xs-12">
                         <h2>About Kung-Fu</h2>
-                        <p>Kung Fu (pronounced wing chun) is an ancient Chinese martial art that was designed in times of war as an effective military technology. We practice it in modern times to defend ourselves in the streets, as well as explore our own economy of motion, and to develop deeper relaxation. The main principles of the systemare centerline, efficiency, and relaxation. To achieve optimal execution of these principles, we practice forms and two person drills.</p>
+                        <p>Kung Fu (pronounced wing chun) is an ancient Chinese martial art that was designed in times of war as an effective military technology. We practice it in modern times to defend ourselves in the streets, as well as explore our own economy of motion, and to develop deeper relaxation. The main principles of the system are centerline, efficiency, and relaxation. To achieve optimal execution of these principles, we practice forms and two person drills.</p>
                         <h4>"The person who says it cannot be done. Should not interrupt the person doing it."</h4>
                         <p>-Chinese Proverb </p>
                     </div>
