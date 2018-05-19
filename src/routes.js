@@ -11,6 +11,7 @@ import Levels from 'src/components/Levels'
 import Faculties from 'src/components/Faculties'
 import Ranks from 'src/components/Ranks'
 import Sales from 'src/components/Sales'
+import Attendances from 'src/components/Attendances'
 
 export default (
   <div>
@@ -24,6 +25,7 @@ export default (
       <AuthContainer canAccess={auth.authenticated} exact path="/faculties" component={Faculties} />
       <AuthContainer canAccess={auth.authenticated} exact path="/ranks" component={Ranks} />
       <AuthContainer canAccess={auth.authenticated} exact path="/sales" component={Sales} />
+      <AuthContainer canAccess={auth.authenticated} exact path="/attendance" component={Attendances} />
     </Switch>
   </div>
 )
