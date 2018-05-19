@@ -9,7 +9,9 @@ class Navbar extends React.Component {
 
     componentDidMount() {
         const item = this.props.match.url
-        this.refs[item].classList.add('active')
+        if (this.refs[item]) {
+          this.refs[item].classList.add('active')
+        }
     }
 
     static logout() {
