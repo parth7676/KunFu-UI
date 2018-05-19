@@ -34,15 +34,15 @@ class Navbar extends React.Component {
 
                     <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul className="nav navbar-nav">
-                            <li ref={"about"}><a href="/about">About</a></li>
-                            {auth.authenticated && <li ref={"faculties"}><a href="/faculties">Faculties</a></li>}
-                            {auth.authenticated && <li ref={"students"}><a href="/">Students</a></li>}
-                            {auth.authenticated && <li ref={"attendance"}><a href="/attendance">Attendance</a></li>}
-                            {auth.authenticated && <li ref={"batches"}><a href="/batches">Batches</a></li>}
-                            {auth.authenticated && <li ref={"sales"}><a href="/sales">Sales</a></li>}
-                            {auth.authenticated && <li ref={"levels"}><a href="/levels">Levels</a></li>}
-                            {auth.authenticated && <li ref={"ranks"}><a href="/ranks">Ranks</a></li>}
-                            {auth.authenticated && <li ref={"progresses"}><a href="/progresses">Progresses</a></li>}
+                            <li ref={"/about"}><a href="/about">About</a></li>
+                            {auth.authenticated && <li ref={"/faculties"}><a href="/faculties">Faculties</a></li>}
+                            {auth.authenticated && <li ref={"/"}><a href="/">Students</a></li>}
+                            {auth.authenticated && <li ref={"/attendance"}><a href="/attendance">Attendance</a></li>}
+                            {auth.authenticated && <li ref={"/batches"}><a href="/batches">Batches</a></li>}
+                            {auth.authenticated && <li ref={"/sales"}><a href="/sales">Sales</a></li>}
+                            {auth.authenticated && <li ref={"/levels"}><a href="/levels">Levels</a></li>}
+                            {auth.authenticated && <li ref={"/ranks"}><a href="/ranks">Ranks</a></li>}
+                            {auth.authenticated && <li ref={"/progresses"}><a href="/progresses">Progresses</a></li>}
                         </ul>
                         <ul className="nav navbar-nav navbar-right" style={{ cursor: 'pointer' }}>
                             {
