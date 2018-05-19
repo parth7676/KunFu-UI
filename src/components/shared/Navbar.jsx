@@ -8,7 +8,14 @@ class Navbar extends React.Component {
     }
 
     componentDidMount() {
-        const item = this.props.match.url
+        let items = this.props.match.url.split("/")
+        let item
+        if (items.length >= 2) {
+            item = `/${items[1]}`
+        }
+        if (items.length < 2 || items[1] === "students") {
+            item = "/"
+        }
         if (this.refs[item]) {
           this.refs[item].classList.add('active')
         }
@@ -25,9 +32,9 @@ class Navbar extends React.Component {
                     <div className="navbar-header">
                         <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                             <span className="sr-only">Toggle navigation</span>
-                            <span className="icon-bar"></span>
-                            <span className="icon-bar"></span>
-                            <span className="icon-bar"></span>
+                            <span className="icon-bar"/>
+                            <span className="icon-bar"/>
+                            <span className="icon-bar"/>
                         </button>
                         <a className="navbar-brand" href="/">KungFu Yoga</a>
                     </div>
@@ -36,7 +43,7 @@ class Navbar extends React.Component {
                         <ul className="nav navbar-nav">
                             <li ref={"/about"}><a href="/about">About</a></li>
                             {auth.authenticated && <li ref={"/faculties"}><a href="/faculties">Faculties</a></li>}
-                            {auth.authenticated && <li ref={"/students"}><a href="/">Students</a></li>}
+                            {auth.authenticated && <li ref={"/"}><a href="/">Students</a></li>}
                             {auth.authenticated && <li ref={"/attendance"}><a href="/attendance">Attendance</a></li>}
                             {auth.authenticated && <li ref={"/batches"}><a href="/batches">Batches</a></li>}
                             {auth.authenticated && <li ref={"/sales"}><a href="/sales">Sales</a></li>}
