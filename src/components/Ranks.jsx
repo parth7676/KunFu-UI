@@ -20,6 +20,7 @@ class Ranks extends React.Component {
     this.actionsFormatter = this.actionsFormatter.bind(this)
     this.beltsFormatter = this.beltsFormatter.bind(this)
     this.levelTypeFormatter = this.levelTypeFormatter.bind(this)
+    this.dateFormatter = this.dateFormatter.bind(this)
     this.state = {
       ranks: [],
       levels: []
@@ -149,6 +150,12 @@ class Ranks extends React.Component {
       insertModal: this.createInsertModal
     }
   }
+  dateFormatter(cell, row) {
+    let event = new Date(cell)
+    return <div>
+        {event.toDateString().slice(4)}
+    </div>
+}
 
   render() {
     return (
@@ -175,8 +182,8 @@ class Ranks extends React.Component {
                 <TableHeaderColumn isKey={true} dataField="belt_color" dataAlign="center" autoValue={true}
                   dataFormat={this.beltsFormatter} editable={{type: 'text', required: true}}>Belt Colour</TableHeaderColumn>
                 <TableHeaderColumn dataField="level_id" dataAlign="center" dataFormat={this.levelTypeFormatter} editable={{type: 'select', options: this.state.levels}}>Level</TableHeaderColumn>
-                <TableHeaderColumn dataField="created_at" dataAlign="center" hiddenOnInsert>Created At</TableHeaderColumn>
-                <TableHeaderColumn dataField="updated_at" dataAlign="center" hiddenOnInsert>Updated At</TableHeaderColumn>
+                <TableHeaderColumn dataField="created_at" dataAlign="center" hiddenOnInsert dataFormat={this.dateFormatter}>Created At</TableHeaderColumn>
+                <TableHeaderColumn dataField="updated_at" dataAlign="center" hiddenOnInsert dataFormat={this.dateFormatter}>Updated At</TableHeaderColumn>
                 <TableHeaderColumn dataField="action" dataAlign="center" dataFormat={this.actionsFormatter} hiddenOnInsert>Actions</TableHeaderColumn>
               </BootstrapTable>
             </div>
