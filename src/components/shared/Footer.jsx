@@ -12,7 +12,7 @@ class Footer extends React.Component {
                             </div>
                             <div className="col-md-4"/>
                             <div className="col-md-4">
-                                <p>Made with <span className="glyphicon glyphicon-heart" style={{ color: 'red' }}></span> by Hardik, Parth and Siddharth</p>
+                                <p>Made with <span className="glyphicon glyphicon-heart" style={{ color: 'red' }}/> by Hardik, Parth and Siddharth</p>
                             </div>
                         </div>
                     </footer>
