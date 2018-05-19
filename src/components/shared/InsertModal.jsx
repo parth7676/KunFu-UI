@@ -43,14 +43,6 @@ class InsertModal extends React.Component {
     this.props.handleSave(data, onSave, onModalClose)
   }
 
-  nextStep (e) {
-    e.preventDefault()
-    const currentStep = this.state.currentStep + 1
-    this.setState({
-      currentStep
-    })
-  }
-
 
   render() {
     const {
