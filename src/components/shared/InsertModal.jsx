@@ -4,7 +4,6 @@ class InsertModal extends React.Component {
   constructor (props) {
     super(props)
     this.validate = this.validate.bind(this)
-    this.nextStep = this.nextStep.bind(this)
     this.beforeHandleSave = this.beforeHandleSave.bind(this)
     this.state = {
       showSaveOption: false,
@@ -41,14 +40,6 @@ class InsertModal extends React.Component {
       }
     }, data)
     this.props.handleSave(data, onSave, onModalClose)
-  }
-
-  nextStep (e) {
-    e.preventDefault()
-    const currentStep = this.state.currentStep + 1
-    this.setState({
-      currentStep
-    })
   }
 
 

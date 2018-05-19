@@ -8,13 +8,17 @@ class Navbar extends React.Component {
     }
 
     componentDidMount() {
-        var item = this.props.match.url
-        if (item == '/') {
-            item = 'students'
-        } else {
-            item = item.split('/')[1]
+        let items = this.props.match.url.split("/")
+        let item
+        if (items.length >= 2) {
+            item = `/${items[1]}`
         }
-        this.refs[item].classList.add('active')
+        if (items.length < 2 || items[1] === "students") {
+            item = "/"
+        }
+        if (this.refs[item]) {
+          this.refs[item].classList.add('active')
+        }
     }
 
     static logout() {
@@ -28,24 +32,24 @@ class Navbar extends React.Component {
                     <div className="navbar-header">
                         <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                             <span className="sr-only">Toggle navigation</span>
-                            <span className="icon-bar"></span>
-                            <span className="icon-bar"></span>
-                            <span className="icon-bar"></span>
+                            <span className="icon-bar"/>
+                            <span className="icon-bar"/>
+                            <span className="icon-bar"/>
                         </button>
                         <a className="navbar-brand" href="/">KungFu Yoga</a>
                     </div>
 
                     <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul className="nav navbar-nav">
-                            <li ref={"about"}><a href="/about">About</a></li>
-                            {auth.authenticated && <li ref={"faculties"}><a href="/faculties">Faculties</a></li>}
-                            {auth.authenticated && <li ref={"students"}><a href="/">Students</a></li>}
-                            {auth.authenticated && <li ref={"attendance"}><a href="/attendance">Attendance</a></li>}
-                            {auth.authenticated && <li ref={"batches"}><a href="/batches">Batches</a></li>}
-                            {auth.authenticated && <li ref={"sales"}><a href="/sales">Sales</a></li>}
-                            {auth.authenticated && <li ref={"levels"}><a href="/levels">Levels</a></li>}
-                            {auth.authenticated && <li ref={"ranks"}><a href="/ranks">Ranks</a></li>}
-                            {auth.authenticated && <li ref={"progresses"}><a href="/progresses">Progresses</a></li>}
+                            <li ref={"/about"}><a href="/about">About</a></li>
+                            {auth.authenticated && <li ref={"/faculties"}><a href="/faculties">Faculties</a></li>}
+                            {auth.authenticated && <li ref={"/"}><a href="/">Students</a></li>}
+                            {auth.authenticated && <li ref={"/attendance"}><a href="/attendance">Attendance</a></li>}
+                            {auth.authenticated && <li ref={"/batches"}><a href="/batches">Batches</a></li>}
+                            {auth.authenticated && <li ref={"/sales"}><a href="/sales">Sales</a></li>}
+                            {auth.authenticated && <li ref={"/levels"}><a href="/levels">Levels</a></li>}
+                            {auth.authenticated && <li ref={"/ranks"}><a href="/ranks">Ranks</a></li>}
+                            {auth.authenticated && <li ref={"/progresses"}><a href="/progresses">Progresses</a></li>}
                         </ul>
                         <ul className="nav navbar-nav navbar-right" style={{ cursor: 'pointer' }}>
                             {
