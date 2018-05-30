@@ -39,8 +39,6 @@ class EditModal extends React.Component {
     }
 
     render() {
-        console.log(this.props.columns)
-
         return (
             <div id={this.props.modalID} className="modal fade" role="dialog">
                 <div className="modal-dialog">

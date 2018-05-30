@@ -8,6 +8,7 @@ import PropTypes from 'prop-types'
 import InsertModal from 'components/shared/InsertModal'
 import * as levels from 'endpoints/levels'
 import EditModal from 'src/components/shared/EditModal'
+import { getBeltInfo } from '../utils/scripts'
 
 class Ranks extends React.Component {
 
@@ -116,39 +117,7 @@ class Ranks extends React.Component {
   }
 
   beltsFormatter(cell, row) {
-    let belt
-    switch (cell) {
-      case "yellow":
-        belt = '#FFFF00'
-        break
-      case "halfgreen":
-        belt = '#3ADF00'
-        break
-      case "green":
-        belt = '#298A08'
-        break
-      case "halfblue":
-        belt = '#0000FF'
-        break
-      case "blue":
-        belt = '#08088A'
-        break
-      case "halfred":
-        belt = '#FE2E64'
-        break
-      case "red":
-        belt = '#DF013A'
-        break
-      case "halfblack":
-        belt = '#848484'
-        break
-      case "black":
-        belt = '#000000'
-        break
-      default:
-        belt = "#FFFFFF"
-    }
-    return <div><span className="glyphicon glyphicon-bookmark" style={{ color: belt, marginRight: 5 }} />{cell}</div>
+    return getBeltInfo(cell);
   }
 
   levelTypeFormatter(cell, row) {
@@ -169,9 +138,9 @@ class Ranks extends React.Component {
   dateFormatter(cell, row) {
     let event = new Date(cell)
     return <div>
-        {event.toDateString().slice(4)}
+      {event.toDateString().slice(4)}
     </div>
-}
+  }
 
   render() {
     return (
