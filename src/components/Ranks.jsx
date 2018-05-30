@@ -7,6 +7,7 @@ import alertify from 'alertifyjs'
 import PropTypes from 'prop-types'
 import InsertModal from 'components/shared/InsertModal'
 import * as levels from 'endpoints/levels'
+import EditModal from 'src/components/shared/EditModal'
 
 class Ranks extends React.Component {
 
@@ -21,14 +22,34 @@ class Ranks extends React.Component {
     this.beltsFormatter = this.beltsFormatter.bind(this)
     this.levelTypeFormatter = this.levelTypeFormatter.bind(this)
     this.dateFormatter = this.dateFormatter.bind(this)
+    this.saveEditedData = this.saveEditedData.bind(this)
     this.state = {
       ranks: [],
-      levels: []
+      levels: [],
+      editData: {}
     }
   }
 
   componentWillMount() {
     this.loadRanks()
+  }
+
+  edit(data) {
+    this.setState({
+      editData: data
+    })
+  }
+
+  saveEditedData(data) {
+    ranks.edit(data).then((res) => {
+      if (res) {
+        this.loadRanks();
+      }
+    }).catch((err) => {
+      if (err) {
+        alertify.error('Unable to edit rank!')
+      }
+    });
   }
 
   loadRanks() {
@@ -50,7 +71,7 @@ class Ranks extends React.Component {
     levels.list().then(response => {
       let levels = []
       response.data.data.forEach(level => {
-        levels.push({value: level.id, label: level.type})
+        levels.push({ value: level.id, text: level.type })
       })
       this.setState({
         levels
@@ -60,11 +81,6 @@ class Ranks extends React.Component {
         alertify.error("Error while loading levels!")
       }
     })
-  }
-
-  edit(e) {
-    const id = e.target.dataset.id
-    this.props.history.push(`/ranks/${id}`)
   }
 
   del(e) {
@@ -82,7 +98,7 @@ class Ranks extends React.Component {
 
   save(data, onSave, onModalClose) {
     ranks.create(data).then(res => {
-      if(res) {
+      if (res) {
         onModalClose()
         this.loadRanks()
       }
@@ -94,7 +110,7 @@ class Ranks extends React.Component {
   }
   actionsFormatter(cell, row) {
     return <div>
-      <i className="fa fa-edit text-primary" style={{ marginRight: 10 }} onClick={this.edit} data-id={row.id} />
+      <i className="fa fa-edit text-primary" style={{ marginRight: 10 }} data-toggle="modal" data-target="#editModal" onClick={() => this.edit(row)} />
       <i className="fa fa-trash text-danger" data-id={row.id} onClick={this.del} />
     </div>
   }
@@ -132,7 +148,7 @@ class Ranks extends React.Component {
       default:
         belt = "#FFFFFF"
     }
-    return <div><span className="glyphicon glyphicon-bookmark" style={{ color: belt, marginRight: 5 }}/>{cell}</div>
+    return <div><span className="glyphicon glyphicon-bookmark" style={{ color: belt, marginRight: 5 }} />{cell}</div>
   }
 
   levelTypeFormatter(cell, row) {
@@ -141,10 +157,10 @@ class Ranks extends React.Component {
 
   createInsertModal(onModalClose, onSave, columns, validateState, ignoreEditable) {
     const attr = { onModalClose, onSave, columns, validateState, ignoreEditable };
-    return <InsertModal { ...attr } title="New Rank" saveBtnText="Add Rank" handleSave={this.save} bsSize="md" />
+    return <InsertModal {...attr} title="New Rank" saveBtnText="Add Rank" handleSave={this.save} bsSize="md" />
   }
 
-  options () {
+  options() {
     return {
       insertBtn: () => <InsertButton btnText="Create Rank" />,
       insertModal: this.createInsertModal
@@ -180,8 +196,8 @@ class Ranks extends React.Component {
             <div className="col-md-12">
               <BootstrapTable data={this.state.ranks} options={this.options()} striped hover condensed search insertRow>
                 <TableHeaderColumn isKey={true} dataField="belt_color" dataAlign="center" autoValue={true}
-                  dataFormat={this.beltsFormatter} editable={{type: 'text', required: true}}>Belt Colour</TableHeaderColumn>
-                <TableHeaderColumn dataField="level_id" dataAlign="center" dataFormat={this.levelTypeFormatter} editable={{type: 'select', options: this.state.levels}}>Level</TableHeaderColumn>
+                  dataFormat={this.beltsFormatter} editable={{ type: 'text', required: true }}>Belt Colour</TableHeaderColumn>
+                <TableHeaderColumn dataField="level_id" dataAlign="center" dataFormat={this.levelTypeFormatter} editable={{ type: 'select', options: this.state.levels }}>Level</TableHeaderColumn>
                 <TableHeaderColumn dataField="created_at" dataAlign="center" hiddenOnInsert dataFormat={this.dateFormatter}>Created At</TableHeaderColumn>
                 <TableHeaderColumn dataField="updated_at" dataAlign="center" hiddenOnInsert dataFormat={this.dateFormatter}>Updated At</TableHeaderColumn>
                 <TableHeaderColumn dataField="action" dataAlign="center" dataFormat={this.actionsFormatter} hiddenOnInsert>Actions</TableHeaderColumn>
@@ -190,6 +206,16 @@ class Ranks extends React.Component {
           </div>
         </div>
         <Footer></Footer>
+        <EditModal
+          modalID="editModal"
+          title="Edit Rank"
+          dataID={this.state.editData.id}
+          onSave={this.saveEditedData}
+          columns={
+            [
+              { type: 'text', field: 'belt_color', name: 'Belt Color', value: this.state.editData.belt_color, disabled: true },
+              { type: 'select', field: 'level_id', name: 'Level', value: this.state.editData.level_id, options: this.state.levels },
+            ]} />
       </div>
     )
   }
