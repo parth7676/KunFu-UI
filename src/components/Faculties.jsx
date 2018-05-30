@@ -15,7 +15,7 @@ class Faculties extends React.Component {
     this.save = this.save.bind(this)
     this.insertModal = this.insertModal.bind(this)
     this.actionsFormatter = this.actionsFormatter.bind(this)
-    this.saveEditedData = this.editData.bind(this)
+    this.saveEditedData = this.saveEditedData.bind(this)
     this.state = {
       faculties: [],
       editData: {}
@@ -107,7 +107,7 @@ class Faculties extends React.Component {
     return (
       <div>
         <Navbar></Navbar>
-        <div className="container margin-top-75">
+        <div className="container margin-top-75 margin-bottom-25">
           <div className="row">
             <div className="col-md-3">
               <div className="panel panel-default">
@@ -117,27 +117,26 @@ class Faculties extends React.Component {
               </div>
             </div>
           </div>
-        </div>
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <h3>Faculties</h3>
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12">
+                <h3>Faculties</h3>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+                <BootstrapTable data={this.state.faculties} options={this.options()} striped hover condensed search insertRow>
+                  <TableHeaderColumn isKey={true} dataField="id" dataAlign="center" autoValue={true} dataSort hiddenOnInsert>Faculty ID</TableHeaderColumn>
+                  <TableHeaderColumn dataField="name" dataAlign="center" editable={{ type: 'text', required: true }} dataSort>Faculty Name</TableHeaderColumn>
+                  <TableHeaderColumn dataField="email" dataAlign="center" editable={{ type: 'email', required: true }}>Email</TableHeaderColumn>
+                  <TableHeaderColumn dataField="password" dataAlign="center" editable={{ type: 'password', required: true }} hidden>Password</TableHeaderColumn>
+                  <TableHeaderColumn dataField="created_at" dataAlign="center" dataSort hiddenOnInsert>Enrolled On</TableHeaderColumn>
+                  <TableHeaderColumn dataField="action" dataAlign="center" dataFormat={this.actionsFormatter} hiddenOnInsert>Actions</TableHeaderColumn>
+                </BootstrapTable>
+              </div>
             </div>
           </div>
-          <div className="row">
-            <div className="col-md-12">
-              <BootstrapTable data={this.state.faculties} options={this.options()} striped hover condensed search insertRow>
-                <TableHeaderColumn isKey={true} dataField="id" dataAlign="center" autoValue={true} dataSort hiddenOnInsert>Faculty ID</TableHeaderColumn>
-                <TableHeaderColumn dataField="name" dataAlign="center" editable={{ type: 'text', required: true }} dataSort>Faculty Name</TableHeaderColumn>
-                <TableHeaderColumn dataField="email" dataAlign="center" editable={{ type: 'email', required: true }}>Email</TableHeaderColumn>
-                <TableHeaderColumn dataField="password" dataAlign="center" editable={{ type: 'password', required: true }} hidden>Password</TableHeaderColumn>
-                <TableHeaderColumn dataField="created_at" dataAlign="center" dataSort hiddenOnInsert>Enrolled On</TableHeaderColumn>
-                <TableHeaderColumn dataField="action" dataAlign="center" dataFormat={this.actionsFormatter} hiddenOnInsert>Actions</TableHeaderColumn>
-              </BootstrapTable>
-            </div>
-          </div>
         </div>
-            </div>   
         <Footer></Footer>
         <EditModal
           modalID="editModal"
