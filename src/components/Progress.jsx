@@ -103,6 +103,10 @@ class Progress extends React.Component {
         </div>
     }
 
+    studentFormat(cell, row) {
+      return cell.name
+    }
+
     render() {
       return (
         <div>
@@ -128,7 +132,7 @@ class Progress extends React.Component {
                                 <BootstrapTable data={this.state.progresses} options={this.options()} striped hover condensed search insertRow>
                                     <TableHeaderColumn isKey={true} dataField="id" dataAlign="center" autoValue={true} dataSort hiddenOnInsert>Progress ID</TableHeaderColumn>
                                     <TableHeaderColumn dataField="student_id" dataAlign="center" dataSort>Student ID</TableHeaderColumn>
-                                    <TableHeaderColumn dataField="student" dataAlign="center">Student Name</TableHeaderColumn>
+                                    <TableHeaderColumn dataField="student" dataAlign="center" dataFormat={this.studentFormat}>Student Name</TableHeaderColumn>
                                     <TableHeaderColumn dataField="date" dataAlign="center" editable={{ type: 'text', required: true }} dataSort>Date</TableHeaderColumn>
                                     <TableHeaderColumn dataField="belt_color" dataAlign="center" dataFormat={this.getFromBeltColor}>From Rank</TableHeaderColumn>
                                     <TableHeaderColumn dataField="belt_color" dataAlign="center" dataFormat={this.getToBeltColor}>To Rank</TableHeaderColumn>
