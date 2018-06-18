@@ -17,7 +17,7 @@ class Progress extends React.Component {
         this.actionsFormatter = this.actionsFormatter.bind(this)
         this.dateFormatter = this.dateFormatter.bind(this)
         this.getBeltColor = this.getBeltColor.bind(this)
-        this.getStudentName = this.getStudentName.bind(this)
+        this.studentFormat = this.studentFormat.bind(this)
         this.state = {
             progresses: []
         }
