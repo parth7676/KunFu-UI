@@ -11,6 +11,7 @@ class EditModal extends React.Component {
             }
         });
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleMultipleSelectChange = this.handleMultipleSelectChange.bind(this);
     }
 
     handleSave() {
@@ -24,6 +25,16 @@ class EditModal extends React.Component {
         this.setState({
             [name]: value
         });
+    }
+
+    handleMultipleSelectChange() {
+        let options = e.target.options;
+        let value = [];
+        for (let i = 0, l = options.length; i < l; i++) {
+            if (options[i].selected) {
+                value.push(options[i].value);
+            }
+        }
     }
 
     componentWillReceiveProps(nextProps) {
@@ -77,12 +88,14 @@ class EditModal extends React.Component {
                                                             ref={column.name}
                                                             id={column.field}
                                                             className="form-control"
-                                                            onChange={this.handleInputChange}
+                                                            onChange={column.selectMultiple ? this.handleMultipleSelectChange : this.handleInputChange}
                                                             disabled={column.disabled ? column.disabled : false}
+                                                            multiple={column.selectMultiple ? column.selectMultiple : false}
                                                             value={this.state[column.field]}>
                                                             {
                                                                 column.options.map(option =>
-                                                                    typeof option === 'object' && <option key={option.value} value={option.value}>{option.label}</option>)
+                                                                  typeof option === 'object' && <option key={option.value} value={option.value}>{option.label}</option>
+                                                                )
                                                             }
                                                         </select>
                                                     </div>
