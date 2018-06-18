@@ -72,7 +72,7 @@ class Ranks extends React.Component {
     levels.list().then(response => {
       let levels = []
       response.data.data.forEach(level => {
-        levels.push({ value: level.id, text: level.type })
+        levels.push({ value: level.id, label: level.type })
       })
       this.setState({
         levels

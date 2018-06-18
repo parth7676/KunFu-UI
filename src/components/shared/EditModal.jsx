@@ -82,7 +82,7 @@ class EditModal extends React.Component {
                                                             value={this.state[column.field]}>
                                                             {
                                                                 column.options.map(option =>
-                                                                    typeof option === 'object' && <option key={option.value} value={option.value}>{option.text}</option>)
+                                                                    typeof option === 'object' && <option key={option.value} value={option.value}>{option.label}</option>)
                                                             }
                                                         </select>
                                                     </div>
@@ -99,7 +99,7 @@ class EditModal extends React.Component {
                                                             value={this.state[column.field]}
                                                             onChange={this.handleInputChange}
                                                             disabled={column.disabled ? column.disabled : false}
-                                                        ></textarea>
+                                                        />
                                                     </div>
                                                 }
                                             </div>
