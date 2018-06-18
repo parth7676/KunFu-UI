@@ -30,12 +30,11 @@ class EditModal extends React.Component {
     handleMultipleSelectChange() {
         let options = e.target.options;
         let value = [];
-        for (var i = 0, l = options.length; i < l; i++) {
+        for (let i = 0, l = options.length; i < l; i++) {
             if (options[i].selected) {
                 value.push(options[i].value);
             }
         }
-        console.log()
     }
 
     componentWillReceiveProps(nextProps) {
@@ -51,7 +50,6 @@ class EditModal extends React.Component {
     }
 
     render() {
-        console.log(this.state)
         return (
             <div id={this.props.modalID} className="modal fade" role="dialog">
                 <div className="modal-dialog">
@@ -95,8 +93,9 @@ class EditModal extends React.Component {
                                                             multiple={column.selectMultiple ? column.selectMultiple : false}
                                                             value={this.state[column.field]}>
                                                             {
-                                                                column.options.map((option, index) =>
-                                                                    typeof option === 'object' && <option key={option.value} value={option.value}>{option.label}</option>)
+                                                                column.options.map(option =>
+                                                                  typeof option === 'object' && <option key={option.value} value={option.value}>{option.label}</option>
+                                                                )
                                                             }
                                                         </select>
                                                     </div>

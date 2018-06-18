@@ -19,13 +19,7 @@ class Students extends React.Component {
         this.save = this.save.bind(this)
         this.actionsFormatter = this.actionsFormatter.bind(this)
         this.state = {
-          students: [],
-          filter: null,
-          filters: [
-            {value: null, label: 'All'},
-            {value: 'parents', label: 'Parents Only'},
-            {value: 'children', label: 'Children Only'}
-          ]
+          students: []
         }
     }
 
@@ -150,17 +144,6 @@ class Students extends React.Component {
                             <h5><b>Total Enrollments: </b>{this.state.students.length}</h5>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-3">
-                        <h4>Filter</h4>
-                        <Select
-                          name="form-field-name"
-                          value={this.state.filter}
-                          onChange={this.handleFilter}
-                          options={this.state.filters}
-                        />
                       </div>
                     </div>
                     <div className="row margin-top-20">
