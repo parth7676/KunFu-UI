@@ -22,7 +22,6 @@ class StudentDetails extends React.Component {
 
     loadStudentDetails(studentId) {
         students.getStudentDetails(studentId).then(response => {
-            console.log(response)
             this.setState({
                 studentDetails: response.data.data,
                 parents: response.data.data.parents,
@@ -36,7 +35,6 @@ class StudentDetails extends React.Component {
     }
 
     render() {
-        console.log(this.state.studentDetails)
         let parentsUI = this.state.parents.map(parent => {
             return (
                 <div className="row" key={parent.id}>

@@ -5,18 +5,19 @@ import { BootstrapTable, InsertButton, TableHeaderColumn } from 'react-bootstrap
 import * as progresses from 'endpoints/progress'
 import alertify from 'alertifyjs'
 import InsertModal from 'components/shared/InsertModal'
+import { getBeltInfo } from '../utils/scripts'
+
 
 class Progress extends React.Component {
     constructor(props) {
         super(props);
-        this.edit = this.edit.bind(this)
         this.del = this.del.bind(this)
         this.save = this.save.bind(this)
         this.insertModal = this.insertModal.bind(this)
         this.actionsFormatter = this.actionsFormatter.bind(this)
         this.dateFormatter = this.dateFormatter.bind(this)
-        this.getFromBeltColor = this.getFromBeltColor.bind(this)
-        this.getToBeltColor = this.getToBeltColor.bind(this)
+        this.getBeltColor = this.getBeltColor.bind(this)
+        this.getStudentName = this.getStudentName.bind(this)
         this.state = {
             progresses: []
         }
@@ -39,10 +40,6 @@ class Progress extends React.Component {
         })
     }
 
-    edit(e) {
-        const id = e.target.dataset.id
-        this.props.history.push(`/progresses/${id}`)
-    }
 
     del(e) {
         const id = e.target.dataset.id
@@ -85,17 +82,14 @@ class Progress extends React.Component {
 
     actionsFormatter(cell, row) {
         return <div>
-            <i className="fa fa-edit text-primary" style={{ marginRight: 10 }} onClick={this.edit} data-id={row.id} />
             <i className="fa fa-trash text-danger" data-id={row.id} onClick={this.del} />
         </div>
     }
-    getFromBeltColor(cell,row) {
-        return row.from_rank.belt_color
+    getBeltColor(cell, row) {
+        return getBeltInfo(cell)
     }
-    getToBeltColor(cell,row) {
-        return row.to_rank.belt_color
-    }
-    
+
+
     dateFormatter(cell, row) {
         let event = new Date(cell)
         return <div>
@@ -103,15 +97,15 @@ class Progress extends React.Component {
         </div>
     }
 
-    studentFormat(cell, row) {
-      return cell.name
+    getStudentName(cell, row) {
+        return cell.name;
     }
 
     render() {
-      return (
-        <div>
-          <Navbar></Navbar>
-          <div className="container margin-top-75">
+        return (
+            <div>
+                <Navbar></Navbar>
+                <div className="container margin-top-75 margin-bottom-25">
                     <div className="row">
                         <div className="col-md-3">
                             <div className="panel panel-default">
@@ -132,21 +126,21 @@ class Progress extends React.Component {
                                 <BootstrapTable data={this.state.progresses} options={this.options()} striped hover condensed search insertRow>
                                     <TableHeaderColumn isKey={true} dataField="id" dataAlign="center" autoValue={true} dataSort hiddenOnInsert>Progress ID</TableHeaderColumn>
                                     <TableHeaderColumn dataField="student_id" dataAlign="center" dataSort>Student ID</TableHeaderColumn>
-                                    <TableHeaderColumn dataField="student" dataAlign="center" dataFormat={this.studentFormat}>Student Name</TableHeaderColumn>
+                                    <TableHeaderColumn dataField="student" dataAlign="center" dataFormat={this.getStudentName}>Student Name</TableHeaderColumn>
                                     <TableHeaderColumn dataField="date" dataAlign="center" editable={{ type: 'text', required: true }} dataSort>Date</TableHeaderColumn>
-                                    <TableHeaderColumn dataField="belt_color" dataAlign="center" dataFormat={this.getFromBeltColor}>From Rank</TableHeaderColumn>
-                                    <TableHeaderColumn dataField="belt_color" dataAlign="center" dataFormat={this.getToBeltColor}>To Rank</TableHeaderColumn>
-                                    <TableHeaderColumn dataField="created_at" dataAlign="center"  hiddenOnInsert dataFormat={this.dateFormatter}>Created On</TableHeaderColumn>
-                                    <TableHeaderColumn dataField="updated_at" dataAlign="center"  hiddenOnInsert dataFormat={this.dateFormatter}>Updated On</TableHeaderColumn>
+                                    <TableHeaderColumn dataField="belt_color" dataAlign="center" dataFormat={this.getBeltColor}>From Rank</TableHeaderColumn>
+                                    <TableHeaderColumn dataField="belt_color" dataAlign="center" dataFormat={this.getBeltColor}>To Rank</TableHeaderColumn>
+                                    <TableHeaderColumn dataField="created_at" dataAlign="center" hiddenOnInsert dataFormat={this.dateFormatter}>Created On</TableHeaderColumn>
+                                    <TableHeaderColumn dataField="updated_at" dataAlign="center" hiddenOnInsert dataFormat={this.dateFormatter}>Updated On</TableHeaderColumn>
                                     <TableHeaderColumn dataField="action" dataAlign="center" dataFormat={this.actionsFormatter} hiddenOnInsert>Actions</TableHeaderColumn>
                                 </BootstrapTable>
                             </div>
                         </div>
                     </div>
                 </div>
-          <Footer></Footer>
-        </div>
-      )
+                <Footer></Footer>
+            </div>
+        )
     }
-  }
-  export default Progress
+}
+export default Progress
