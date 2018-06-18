@@ -11,6 +11,7 @@ class EditModal extends React.Component {
             }
         });
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleMultipleSelectChange = this.handleMultipleSelectChange.bind(this);
     }
 
     handleSave() {
@@ -26,6 +27,17 @@ class EditModal extends React.Component {
         });
     }
 
+    handleMultipleSelectChange() {
+        let options = e.target.options;
+        let value = [];
+        for (var i = 0, l = options.length; i < l; i++) {
+            if (options[i].selected) {
+                value.push(options[i].value);
+            }
+        }
+        console.log()
+    }
+
     componentWillReceiveProps(nextProps) {
         this.setState({
             id: nextProps.dataID
@@ -39,6 +51,7 @@ class EditModal extends React.Component {
     }
 
     render() {
+        console.log(this.state)
         return (
             <div id={this.props.modalID} className="modal fade" role="dialog">
                 <div className="modal-dialog">
@@ -77,12 +90,13 @@ class EditModal extends React.Component {
                                                             ref={column.name}
                                                             id={column.field}
                                                             className="form-control"
-                                                            onChange={this.handleInputChange}
+                                                            onChange={column.selectMultiple ? this.handleMultipleSelectChange : this.handleInputChange}
                                                             disabled={column.disabled ? column.disabled : false}
+                                                            multiple={column.selectMultiple ? column.selectMultiple : false}
                                                             value={this.state[column.field]}>
                                                             {
-                                                                column.options.map(option =>
-                                                                    typeof option === 'object' && <option key={option.value} value={option.value}>{option.text}</option>)
+                                                                column.options.map((option, index) =>
+                                                                    typeof option === 'object' && <option key={`${option.value}.${index}`} value={option.value}>{option.text}</option>)
                                                             }
                                                         </select>
                                                     </div>
