@@ -82,17 +82,17 @@ class StudentDetails extends React.Component {
                 </div>
             )
         })
-
+        console.log(this.state);
         let studentProgress = this.state.studentProgress.map(progress => {
             let beltColor = getBeltInfo(progress.to_rank.belt_color, true)
             return (
                 <div className="col-sm-12 col-md-6 col-md-offset-3" key={progress.id} style={{ textAlign: 'center' }}>
                     <span className="primary-text margin-right-10 text-capitalize">{`${progress.from_rank.belt_color} Belt`}</span>
                     <span className="secondary-text fas fa-angle-double-right margin-right-10"></span>
-                    <span className="label margin-right-10" style={{fontSize:'18px', backgroundColor: beltColor}}>{progress.date}</span>
+                    <span className="label margin-right-10" style={{ fontSize: '18px', backgroundColor: beltColor }}>{progress.date}</span>
                     <span className="secondary-text fas fa-angle-double-right margin-right-10"></span>
                     <span className="primary-text text-capitalize">{`${progress.to_rank.belt_color} Belt`}</span>
-                    <hr/>
+                    <hr />
                 </div>
             )
         })
@@ -189,7 +189,7 @@ class StudentDetails extends React.Component {
                                                 <TableHeaderColumn dataField="created_at" dataAlign="center" dataSort>Date</TableHeaderColumn>
                                                 <TableHeaderColumn dataField="type" dataAlign="center" dataSort>Type</TableHeaderColumn>
                                                 <TableHeaderColumn dataField="message" dataAlign="center">Message</TableHeaderColumn>
-                                                <TableHeaderColumn dataField="amount" dataAlign="center" dataSort>Amount</TableHeaderColumn>
+                                                <TableHeaderColumn dataField="amount" dataAlign="center" dataSort>Amount($)</TableHeaderColumn>
                                             </BootstrapTable>
                                         </div>
                                     </div>
