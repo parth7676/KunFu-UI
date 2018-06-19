@@ -7,7 +7,7 @@ export function dateConverter(date) {
 }
 
 
-export function getBeltInfo(beltColor) {
+export function getBeltInfo(beltColor, colorOnly = false) {
     let belt;
     let label;
     switch (beltColor) {
@@ -50,6 +50,9 @@ export function getBeltInfo(beltColor) {
         default:
             belt = "#FFFFFF"
             label = 'White'
+    }
+    if (colorOnly) {
+        return belt;
     }
     return <div><span className="glyphicon glyphicon-bookmark" style={{ color: belt, marginRight: 5 }} />{label}</div>
 }
