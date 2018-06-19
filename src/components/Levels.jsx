@@ -49,7 +49,7 @@ class Levels extends React.Component {
                 let ranks = []
                 res.data.data.forEach((rank) => {
                     console.log(rank)
-                    ranks.push({ value: rank.belt_color, text: rank.belt_color })
+                    ranks.push({ value: rank.belt_color, label: rank.belt_color })
                 })
                 this.setState({
                     ranks: ranks
@@ -94,7 +94,7 @@ class Levels extends React.Component {
 
     rankFormatter(cell, row) {
         let ranks = ""
-        cell.length !== 0 && cell.forEach(rank => ranks = ranks + " " + `<span class="badge text-capitalize">${rank.belt_color}</span>`)
+        cell.length !== 0 && cell.forEach(rank => ranks = ranks + " " + `<span class="badge text-capitalize">${rank.belt_color}</span></br>`)
         cell.length === 0 && (ranks = "No ranks associated")
         return ranks
     }

@@ -6,6 +6,7 @@ import * as batches from 'endpoints/batches'
 import * as levels from 'endpoints/levels'
 import alertify from 'alertifyjs'
 import InsertModal from 'src/components/shared/InsertModal'
+import EditModal from 'src/components/shared/EditModal'
 
 class Batches extends React.Component {
     constructor(props, context) {
@@ -16,18 +17,21 @@ class Batches extends React.Component {
         this.save = this.save.bind(this)
         this.insertModal = this.insertModal.bind(this)
         this.options = this.options.bind(this)
+        this.editData = this.editData.bind(this)
+        this.saveEditedData = this.saveEditedData.bind(this)
         this.state = ({
             batches: [],
             days: [
-              {value: 'Monday', label: 'Monday'},
-              {value: 'Tuesday', label: 'Tuesday'},
-              {value: 'Wednesday', label: 'Wednesday'},
-              {value: 'Thursday', label: 'Thursday'},
-              {value: 'Friday', label: 'Friday'},
-              {value: 'Saturday', label: 'Saturday'},
-              {value: 'Sunday', label: 'Sunday'},
+                { value: 'Monday', label: 'Monday' },
+                { value: 'Tuesday', label: 'Tuesday' },
+                { value: 'Wednesday', label: 'Wednesday' },
+                { value: 'Thursday', label: 'Thursday' },
+                { value: 'Friday', label: 'Friday' },
+                { value: 'Saturday', label: 'Saturday' },
+                { value: 'Sunday', label: 'Sunday' },
             ],
-            levels: []
+            levels: [],
+            editData: {}
         })
     }
 
@@ -37,7 +41,7 @@ class Batches extends React.Component {
 
     actionsFormatter(cell, row) {
         return <div>
-            <i className="fa fa-edit text-primary" style={{ marginRight: 10 }} onClick={this.edit} data-id={row.id} />
+            <i className="fa fa-edit text-primary" style={{ marginRight: 10 }} data-toggle="modal" data-target="#editModal" onClick={() => { this.editData(row) }} />
             <i className="fa fa-trash text-danger" onClick={() => this.deleteBatch(row.id)} />
         </div>
     }
@@ -60,19 +64,19 @@ class Batches extends React.Component {
     }
 
     loadLevels() {
-      levels.list().then(response => {
-        let levels = []
-        response.data.data.forEach(level => {
-            levels.push({value: level.id, label: level.type})
+        levels.list().then(response => {
+            let levels = []
+            response.data.data.forEach(level => {
+                levels.push({ value: level.id, label: level.type })
+            })
+            this.setState({
+                levels
+            })
+        }).catch(error => {
+            if (error) {
+                alertify.error("Error while loading levels!")
+            }
         })
-        this.setState({
-          levels
-        })
-      }).catch(error => {
-        if (error) {
-          alertify.error("Error while loading levels!")
-        }
-      })
     }
 
     deleteBatch(id) {
@@ -100,19 +104,40 @@ class Batches extends React.Component {
         })
     }
 
-    insertModal (onModalClose, onSave, columns, validateState, ignoreEditable) {
+    insertModal(onModalClose, onSave, columns, validateState, ignoreEditable) {
         const attr = { onModalClose, onSave, columns, validateState, ignoreEditable };
-        return <InsertModal { ...attr } title="New Batch" saveBtnText="Start Batch" handleSave={this.save} bsSize="md" />
+        return <InsertModal {...attr} title="New Batch" saveBtnText="Start Batch" handleSave={this.save} bsSize="md" />
     }
 
-    options () {
+    options() {
         return {
-          insertModal: this.insertModal,
-          insertBtn: () => <InsertButton btnText="New Batch" />
+            insertModal: this.insertModal,
+            insertBtn: () => <InsertButton btnText="New Batch" />
         }
     }
 
+    editData(data) {
+        this.setState({
+            editData: data
+        })
+    }
+
+    saveEditedData(data) {
+        debugger;
+        batches.update(data, this.state.editData.id).then(response => {
+            if (response) {
+                this.loadBatches()
+                this.loadLevels()
+            }
+        }).catch(error => {
+            if (error) {
+                alertify.error("Error while updating batch!")
+            }
+        })
+    }
+
     render() {
+        console.log(this.state);
         return (
             <div>
                 <Navbar></Navbar>
@@ -126,17 +151,28 @@ class Batches extends React.Component {
                         <div className="col-md-12">
                             <BootstrapTable data={this.state.batches} options={this.options()} striped hover condensed search insertRow>
                                 <TableHeaderColumn isKey={true} dataField="id" dataAlign="center" autoValue={true} hiddenOnInsert>Batch ID</TableHeaderColumn>
-                                <TableHeaderColumn dataField="day" dataAlign="center" editable={{type: 'select', options: this.state.days}}>Day</TableHeaderColumn>
-                                <TableHeaderColumn dataField="time" dataAlign="center" editable={{type: 'time', required: true}}>Time</TableHeaderColumn>
+                                <TableHeaderColumn dataField="day" dataAlign="center" editable={{ type: 'select', options: this.state.days }}>Day</TableHeaderColumn>
+                                <TableHeaderColumn dataField="time" dataAlign="center" editable={{ type: 'time', required: true }}>Time</TableHeaderColumn>
                                 <TableHeaderColumn dataField="created_at" dataAlign="center" hiddenOnInsert>Careted At</TableHeaderColumn>
                                 <TableHeaderColumn dataField="updated_at" dataAlign="center" hiddenOnInsert>Updated At</TableHeaderColumn>
-                                <TableHeaderColumn dataField="level_id" dataAlign="center" dataFormat={this.renderLevel} editable={{type: 'select', options: this.state.levels, required: true}}>Level</TableHeaderColumn>
+                                <TableHeaderColumn dataField="level_id" dataAlign="center" dataFormat={this.renderLevel} editable={{ type: 'select', options: this.state.levels, required: true }}>Level</TableHeaderColumn>
                                 <TableHeaderColumn dataField="action" dataAlign="center" dataFormat={this.actionsFormatter} hiddenOnInsert>Actions</TableHeaderColumn>
                             </BootstrapTable>
                         </div>
                     </div>
                 </div>
                 <Footer></Footer>
+                <EditModal
+                    modalID="editModal"
+                    title="Edit Batch"
+                    dataID={this.state.editData.id}
+                    onSave={this.saveEditedData}
+                    columns={
+                        [
+                            { type: 'select', field: 'day', name: 'Day', options: this.state.days, value: this.state.editData.day },
+                            { type: 'time', field: 'time', name: 'Time', value: this.state.editData.time },
+                            { type: 'select', field: 'level_id', name: 'Level', options: this.state.levels, value: this.state.editData.level_id },
+                        ]} />
             </div>
         )
     }
