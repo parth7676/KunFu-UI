@@ -15,6 +15,6 @@ export function create(data) {
   return axios.post(URL, data)
 }
 
-export function update(data) {
-  return axios.put(URL + "/" + data.id, data)
+export function update(id, data) {
+  return axios.put(URL + "/" + id, data)
 }

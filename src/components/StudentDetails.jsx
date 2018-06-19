@@ -137,7 +137,7 @@ class StudentDetails extends React.Component {
                                     </div>
                                     <div className="row">
                                         <div className="col-md-4">
-                                            <span className="display primary-text">{this.state.studentDetails.rank && `${this.state.studentDetails.rank.belt_color} Belt`}</span>
+                                            <span className="display primary-text">{this.state.studentDetails.rank && getBeltInfo(this.state.studentDetails.rank.belt_color)}</span>
                                             <span className="display secondary-text">Current Rank</span>
                                         </div>
                                         <div className="col-md-4">

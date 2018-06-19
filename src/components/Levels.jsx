@@ -48,7 +48,7 @@ class Levels extends React.Component {
             if (res) {
                 let ranks = []
                 res.data.data.forEach((rank) => {
-                    ranks.push({ value: rank.belt_color, label: rank.belt_color })
+                    ranks.push({ value: rank.belt_color, label: rank.belt_color, id: rank.id })
                 })
                 this.setState({
                     ranks: ranks
@@ -68,7 +68,14 @@ class Levels extends React.Component {
     }
 
     saveEditedData(data) {
-        levels.update(data).then(response => {
+        let rankTOUpdate = []
+        data.ranks.forEach(rank => {
+            let selectedRank = this.state.ranks.filter(data => data.value == rank)
+            console.log(selectedRank)
+            rankTOUpdate.push(selectedRank[0].id)
+        })
+
+        levels.update(this.state.editData.id, data).then(response => {
             if (response) {
                 this.loadLevels()
             }
@@ -131,6 +138,7 @@ class Levels extends React.Component {
         }
     }
     render() {
+        console.log(this.state)
         let selectedRanks = [];
         this.state.editData.ranks && this.state.editData.ranks.forEach((rank) => { selectedRanks.push(rank.belt_color) })
         return (

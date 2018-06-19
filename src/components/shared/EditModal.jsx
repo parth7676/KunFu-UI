@@ -27,14 +27,20 @@ class EditModal extends React.Component {
         });
     }
 
-    handleMultipleSelectChange() {
+    handleMultipleSelectChange(e) {
         let options = e.target.options;
+        const name = e.target.id;
+        console.log(name);
         let value = [];
         for (let i = 0, l = options.length; i < l; i++) {
             if (options[i].selected) {
-                value.push(options[i].value);
+                if (!value.includes(options[i].value))
+                    value.push(options[i].value);
             }
         }
+        this.setState({
+            [name]: value
+        });
     }
 
     componentWillReceiveProps(nextProps) {
@@ -94,7 +100,7 @@ class EditModal extends React.Component {
                                                             value={this.state[column.field]}>
                                                             {
                                                                 column.options.map(option =>
-                                                                  typeof option === 'object' && <option key={option.value} value={option.value}>{option.label}</option>
+                                                                    typeof option === 'object' && <option key={option.value} value={option.value}>{option.label}</option>
                                                                 )
                                                             }
                                                         </select>
