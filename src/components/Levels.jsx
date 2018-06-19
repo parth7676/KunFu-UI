@@ -48,7 +48,6 @@ class Levels extends React.Component {
             if (res) {
                 let ranks = []
                 res.data.data.forEach((rank) => {
-                    console.log(rank)
                     ranks.push({ value: rank.belt_color, label: rank.belt_color })
                 })
                 this.setState({
@@ -69,7 +68,15 @@ class Levels extends React.Component {
     }
 
     saveEditedData(data) {
-        console.log(data)
+        levels.update(data).then(response => {
+            if (response) {
+                this.loadLevels()
+            }
+        }).catch(error => {
+            if (error) {
+                alertify.error("Error while updating level!")
+            }
+        })
     }
 
     del(e) {
@@ -124,7 +131,6 @@ class Levels extends React.Component {
         }
     }
     render() {
-        console.log(this.state)
         let selectedRanks = [];
         this.state.editData.ranks && this.state.editData.ranks.forEach((rank) => { selectedRanks.push(rank.belt_color) })
         return (
