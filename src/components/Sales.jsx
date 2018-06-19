@@ -20,6 +20,7 @@ class Sales extends React.Component {
         this.createInsertModal = this.createInsertModal.bind(this)
         this.state = {
             sales: [],
+            total: 0,
             types: [
               {value: 'Membership', label: 'Membership'},
               {value: 'Tests', label: 'Tests'},
@@ -36,8 +37,11 @@ class Sales extends React.Component {
     loadSales() {
         sales.list().then(res => {
             if (res) {
+                let total = 0
+                res.data.data.map(s => total = total+s.amount)
                 this.setState({
-                    sales: res.data.data
+                    sales: res.data.data,
+                    total
                 })
             }
         }).catch(err => {
@@ -118,6 +122,13 @@ class Sales extends React.Component {
                             <div className="panel panel-default">
                                 <div className="panel-body">
                                     <h5><b>Total Sales:</b> {this.state.sales.length}</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-md-3">
+                            <div className="panel panel-default">
+                                <div className="panel-body">
+                                    <h5><b>Total Amount:</b> <i className="fa fa-dollar-sign"/>{this.state.total}</h5>
                                 </div>
                             </div>
                         </div>

@@ -142,6 +142,15 @@ class Batches extends React.Component {
                 <Navbar></Navbar>
                 <div className="container margin-top-75 margin-bottom-25">
                     <div className="row">
+                        <div className="col-md-3">
+                            <div className="panel panel-default">
+                                <div className="panel-body">
+                                    <h5><b>Total Batches:</b> {this.state.batches.length}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row">
                         <div className="col-md-12">
                             <h3>Batches</h3>
                         </div>
