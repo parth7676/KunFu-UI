@@ -3,6 +3,7 @@ import Navbar from 'src/components/shared/Navbar'
 import Footer from 'src/components/shared/Footer'
 import { BootstrapTable, InsertButton, TableHeaderColumn } from 'react-bootstrap-table'
 import * as attendances from 'endpoints/attendances'
+import * as batches from 'endpoints/batches'
 import alertify from 'alertifyjs'
 import InsertModal from 'components/shared/InsertModal'
 
@@ -15,13 +16,16 @@ class Attendances extends React.Component {
         this.actionsFormatter = this.actionsFormatter.bind(this)
         this.getStudentName = this.getStudentName.bind(this)
         this.dateFormatter = this.dateFormatter.bind(this)
+        this.getBatch = this.getBatch.bind(this)
+        this.loadBatches = this.loadBatches.bind(this)
         this.state = {
-            attendances: []
+            attendances: [],
+            batches: []
         }
     }
 
     componentWillMount() {
-        this.loadAttendances()
+        this.loadBatches()
     }
 
     loadAttendances() {
@@ -34,6 +38,25 @@ class Attendances extends React.Component {
         }).catch(err => {
             if (err) {
                 alertify.error('Unable to fetch attendances')
+            }
+        })
+    }
+
+    loadBatches() {
+        batches.list().then(res => {
+            if (res) {
+                let batches = []
+                res.data.data.forEach(batch => {
+                    batches.push({ value: batch.id, label: batch.day })
+                })
+                this.setState({
+                  batches
+                })
+                this.loadAttendances();
+            }
+        }).catch(err => {
+            if (err) {
+                alertify.error('Unable to fetch batches!')
             }
         })
     }
@@ -52,7 +75,6 @@ class Attendances extends React.Component {
     }
 
     save(data, onSave, onModalClose) {
-        debugger;
         attendances.create(data).then(res => {
             if (res) {
                 onModalClose()
@@ -94,6 +116,13 @@ class Attendances extends React.Component {
         </div>
     }
 
+    getBatch(cell, row) {
+        let batchId = row.batch_id
+        let batches = this.state.batches
+        let batch = batches.filter(b => b.value === batchId)[0].label
+        return batch
+    }
+
     render() {
         return (
             <div>
@@ -121,7 +150,7 @@ class Attendances extends React.Component {
                                     <TableHeaderColumn dataField="date" dataAlign="center" editable={{ type: 'date', required: true }} dataSort hiddenOnInsert>Date</TableHeaderColumn>
                                     <TableHeaderColumn dataField="student_id" dataAlign="center" dataSort>Student ID</TableHeaderColumn>
                                     <TableHeaderColumn dataField="student" dataFormat={this.getStudentName} dataAlign="center" hiddenOnInsert>Student Name</TableHeaderColumn>
-                                    <TableHeaderColumn dataField="batch_id" dataAlign="center">Batch ID</TableHeaderColumn>
+                                    <TableHeaderColumn dataField="batch_id" dataAlign="center" dataFormat={this.getBatch} editable={{ type: 'select', options: this.state.batches }}>Batch</TableHeaderColumn>
                                     <TableHeaderColumn dataField="created_at" dataAlign="center" hiddenOnInsert dataFormat={this.dateFormatter}>Enrolled On</TableHeaderColumn>
                                     <TableHeaderColumn dataField="updated_at" dataAlign="center" hiddenOnInsert dataFormat={this.dateFormatter}>Updated On</TableHeaderColumn>
                                     <TableHeaderColumn dataField="action" dataAlign="center" dataFormat={this.actionsFormatter} hiddenOnInsert>Actions</TableHeaderColumn>
