@@ -48,8 +48,7 @@ class Levels extends React.Component {
             if (res) {
                 let ranks = []
                 res.data.data.forEach((rank) => {
-                    console.log(rank)
-                    ranks.push({ value: rank.belt_color, text: rank.belt_color })
+                    ranks.push({ value: rank.belt_color, label: rank.belt_color })
                 })
                 this.setState({
                     ranks: ranks
@@ -69,7 +68,15 @@ class Levels extends React.Component {
     }
 
     saveEditedData(data) {
-        console.log(data)
+        levels.update(data).then(response => {
+            if (response) {
+                this.loadLevels()
+            }
+        }).catch(error => {
+            if (error) {
+                alertify.error("Error while updating level!")
+            }
+        })
     }
 
     del(e) {
@@ -94,7 +101,7 @@ class Levels extends React.Component {
 
     rankFormatter(cell, row) {
         let ranks = ""
-        cell.length !== 0 && cell.forEach(rank => ranks = ranks + " " + `<span class="badge text-capitalize">${rank.belt_color}</span>`)
+        cell.length !== 0 && cell.forEach(rank => ranks = ranks + " " + `<span class="badge text-capitalize">${rank.belt_color}</span></br>`)
         cell.length === 0 && (ranks = "No ranks associated")
         return ranks
     }
@@ -124,7 +131,6 @@ class Levels extends React.Component {
         }
     }
     render() {
-        console.log(this.state)
         let selectedRanks = [];
         this.state.editData.ranks && this.state.editData.ranks.forEach((rank) => { selectedRanks.push(rank.belt_color) })
         return (

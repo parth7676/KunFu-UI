@@ -104,7 +104,7 @@ class Attendances extends React.Component {
         return (
             <div>
                 <Navbar></Navbar>
-                <div className="container margin-top-75">
+                <div className="container margin-top-75 margin-bottom-25">
                     <div className="row">
                         <div className="col-md-3">
                             <div className="panel panel-default">
@@ -124,7 +124,7 @@ class Attendances extends React.Component {
                             <div className="col-md-12">
                                 <BootstrapTable data={this.state.attendances} options={this.options()} striped hover condensed search insertRow>
                                     <TableHeaderColumn isKey={true} dataField="id" dataAlign="center" autoValue={true} dataSort hiddenOnInsert>Attendance ID</TableHeaderColumn>
-                                    <TableHeaderColumn dataField="date" dataAlign="center" editable={{ type: 'text', required: true }} dataSort>Data</TableHeaderColumn>
+                                    <TableHeaderColumn dataField="date" dataAlign="center" editable={{ type: 'text', required: true }} dataSort>Date</TableHeaderColumn>
                                     <TableHeaderColumn dataField="student_id" dataAlign="center" dataSort>Student ID</TableHeaderColumn>
                                     <TableHeaderColumn dataField="student" dataFormat={this.getStudentName} dataAlign="center"  hiddenOnInsert>Student Name</TableHeaderColumn>
                                     <TableHeaderColumn dataField="batch_id" dataAlign="center">Batch ID</TableHeaderColumn>
