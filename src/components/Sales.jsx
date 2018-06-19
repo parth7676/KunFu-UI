@@ -10,7 +10,6 @@ class Sales extends React.Component {
 
     constructor(props) {
         super(props);
-        this.edit = this.edit.bind(this)
         this.del = this.del.bind(this)
         this.actionsFormatter = this.actionsFormatter.bind(this)
         this.dateFormatter = this.dateFormatter.bind(this)
@@ -51,11 +50,6 @@ class Sales extends React.Component {
         })
     }
 
-    edit(e) {
-        const id = e.target.dataset.id
-        this.props.history.push(`/sales/${id}`)
-    }
-
     del(e) {
         const id = e.target.dataset.id
         sales.del(id).then(res => {
@@ -71,7 +65,6 @@ class Sales extends React.Component {
 
     actionsFormatter(cell, row) {
         return <div>
-            <i className="fa fa-edit text-primary" style={{ marginRight: 10 }} onClick={this.edit} data-id={row.id} />
             <i className="fa fa-trash text-danger" data-id={row.id} onClick={this.del} />
         </div>
     }
@@ -147,7 +140,7 @@ class Sales extends React.Component {
                                 <TableHeaderColumn dataField="date" dataAlign="center" dataSort editable={{type: 'date', required: false, message: "leave blank for today's date"}}>Date</TableHeaderColumn>
                                 <TableHeaderColumn dataField="student_id" dataAlign="center" dataSort hidden>Student ID</TableHeaderColumn>
                                 <TableHeaderColumn dataField="student" dataFormat={this.getStudentName} dataAlign="center" dataSort hiddenOnInsert>Student Name</TableHeaderColumn>
-                                <TableHeaderColumn dataField="amount" dataAlign="center" editable={{type: 'number', required: true}}>Amount</TableHeaderColumn>
+                                <TableHeaderColumn dataField="amount" dataAlign="center" editable={{type: 'number', required: true}}>Amount($)</TableHeaderColumn>
                                 <TableHeaderColumn dataField="created_at" dataAlign="center" dataFormat={this.dateFormatter} hiddenOnInsert>Created On</TableHeaderColumn>
                                 <TableHeaderColumn dataField="updated_at" dataAlign="center" dataFormat={this.dateFormatter} hiddenOnInsert>Updated On</TableHeaderColumn>
                                 <TableHeaderColumn dataField="action" dataAlign="center" dataFormat={this.actionsFormatter} hiddenOnInsert>Actions</TableHeaderColumn>
